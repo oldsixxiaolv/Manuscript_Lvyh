@@ -1,0 +1,365 @@
+# -- coding:utf-8 --
+from pyhdf.SD import SD, SDC
+import numpy as np
+import matplotlib.pyplot as plt
+from read_shuju_add import read_shuju_ADD
+import math
+
+
+def duqu_excel():
+    import pandas as pd
+    # write later
+    file_path = r''
+    df = pd.read_excel(file_path, usecols=[1], names=None)
+    dali = df.values.tolist()
+    result = []
+    for i in dali:
+        result.append(i[0])
+    return result
+
+
+def npixels_size(npixels, boost):
+    boost_former = 4.3 * 4.3
+    boost_latter = 5 * 5
+    npixel = list(npixels)
+    pixel = []
+    boost = list(boost)
+    t = zip(boost, npixel)
+    # 记住以下我们以后要是碰到需要利用两个列表同时遍历的情况，一定要使用zip
+    for i, j in t:
+        if i == 1:
+            mid = j * boost_latter
+            pixel.append(mid)
+        else:
+            mid = j * boost_former
+            pixel.append(mid)
+    return np.array(pixel)
+
+
+"""读取数据"""
+
+def read_shuju():
+    data = SD('/root/git/Project_develop/TRMM_tropical_convection_dataset.hdf', SDC.READ)
+    longitude = data.select("longitude")[:]
+    latitude = data.select("latitude")[:]
+    landocean = list(data.select("landocean")[:])
+    landocean = np.array(list(map(int, landocean)))
+    flashcount = data.select('flashcount')[:]
+    maxht20 = data.select("maxht20")[:]
+    volrain = data.select('volrain')[:]
+    rainconv = data.select('rainconv')[:]
+    npixels_20 = data.select("npixels_20")[:]
+    npixels_40 = data.select("npixels_40")[:]
+    viewtime = data.select("viewtime")[:]
+    maxht40 = data.select("maxht40")[:]
+    # boost = data.select("boost")[:]
+    # npixels_40_area = npixels_size(npixels_40, boost)
+    r = np.divide(rainconv, volrain)
+    # 筛选数据
+    index1 = np.where(longitude > -20)
+    index2 = list(np.where(latitude > -20))
+    index3 = list(np.where(landocean == 1))
+    index4 = list(np.where(longitude < 50))
+    index5 = list(np.where(latitude < 20))
+    # 把没有闪电数据的但是有maxht40的和没有maxht40但有闪电数据的去除
+    # index6 = list(np.where(flashcount != 0))
+    index6 = list(np.where(npixels_40 != 0))
+    index7 = list(np.where(maxht40 != 0))
+    index8 = list(np.where(flashcount != 0))
+    # index8 = list(np.where(npixels_20 > 0))
+    # index9 = list(np.where(r > 0))
+    # index10 = list(np.where(r < 1))
+    index11 = list(np.where(maxht20 != 0))
+    index12 = list(np.where(npixels_20 != 0))
+    index13 = list(np.where(~np.isnan(viewtime)))
+    # npixels_40 = data.select("npixels_40")[:]
+    # 两个数组取交集
+    index = list(set(index1[0]) & set(index2[0]) & set(index3[0]) & set(index4[0]) &
+                 set(index5[0]) & set(index6[0]) & set(index7[0]) & set(index8[0]) &
+                 set(index11[0]) & set(index12[0]) & set(index13[0]))
+    index = sorted(index)
+    # indexx = duqu_excel()
+    # 把hdf文件中的闪电频数数据提取出来
+    flashcount = data.select('flashcount')[:]
+    """这里我们可以看到对于一个可迭代的变量索引可以使用一个列表然后就可以直接赋值。"""
+    flashcount = flashcount[index]
+    # flashcount = flashcount[indexx]
+    # 把hdf文件中总的降水数据提取出来
+    volrain = data.select('volrain')[:]
+    volrain = volrain[index]
+    # volrain = volrain[indexx]
+    # 把hdf文件中的对流降水数据分离出来
+    rainconv = data.select('rainconv')[:]
+    rainconv = rainconv[index]
+    # rainconv = rainconv[indexx]
+    # 把hdf文件中的观测时间数据提取出来
+    viewtime = data.select('viewtime')[:]
+    viewtime = viewtime[index]
+    # viewtime = viewtime[indexx]
+    # 把hdf文件是否升轨数据提取出来
+    boost = data.select("boost")[:]
+    boost = boost[index]
+    # boost = boost[indexx]
+    minir = data.select("minir")[:]
+    minir = minir[index]
+    # minir = minir[indexx]
+    maxht20 = data.select("maxht20")[:]
+    maxht20 = maxht20[index]
+    # maxht20 = maxht20[indexx]
+    maxht30 = data.select("maxht30")[:]
+    maxht30 = maxht30[index]
+    # maxht30 = maxht30[indexx]
+    maxht40 = data.select("maxht40")[:]
+    maxht40 = maxht40[index]
+    # maxht40 = maxht40[indexx]
+    npixels_40 = data.select("npixels_40")[:]
+    npixels_40 = npixels_40[index]
+    # npixels_40 = npixels_40[indexx]
+    npixels_40 = npixels_size(npixels_40, boost)
+    npixels_40_K = np.multiply(npixels_40, 4)
+    npixels_40_K = np.divide(npixels_40_K, math.pi)
+    npixels_40_R = np.sqrt(npixels_40_K)
+    npixels_30 = data.select("npixels_30")[:]
+    npixels_30 = npixels_30[index]
+    # npixels_30 = npixels_30[indexx]
+    npixels_30 = npixels_size(npixels_30, boost)
+    npixels_30_K = np.multiply(npixels_30, 4)
+    npixels_30_K = np.divide(npixels_30_K, math.pi)
+    npixels_30_R = np.sqrt(npixels_30_K)
+    npixels_20 = data.select("npixels_20")[:]
+    npixels_20 = npixels_20[index]
+    # npixels_20 = npixels_20[indexx]
+    npixels_20 = npixels_size(npixels_20, boost)
+    npixels_20_K = np.multiply(npixels_20, 4)
+    npixels_20_K = np.divide(npixels_20_K, math.pi)
+    npixels_20_R = np.sqrt(npixels_20)
+    # n20和n40
+    n40 = data.select("n40dbz")[:]
+    n40 = n40[index]
+    n40_mid = []
+    for i, j in zip(n40, boost):
+        if j == 1:
+            mid = sum(i * 5 * 5 * 1.25)
+        else:
+            mid = sum(i * 4.3 * 4.3 * 1.25)
+        n40_mid.append(mid)
+    n40_volume = np.array(n40_mid)
+    n20 = data.select("n20dbz")[:]
+    n20 = n20[index]
+    n20_mid = []
+    for i, j in zip(n20, boost):
+        if j == 1:
+            mid = sum(i * 5 * 5 * 1.25)
+        else:
+            mid = sum(i * 4.3 * 4.3 * 1.25)
+        n20_mid.append(mid)
+    n20_volume = np.array(n20_mid)
+    # mdbz
+    mdbz = data.select("mdbz")[:]
+    mdbz = mdbz[index]
+    # 闪电频数=闪电数/viewtime*60，我们使用每分钟的闪电频数
+    flashfrequence = np.divide(flashcount * 60, viewtime)
+    maxdbz = data.select("maxdbz")[:]
+    maxdbz = maxdbz[index]
+    # maxdbz = maxdbz[indexx]
+    maxht = data.select("maxht")[:]
+    maxht = maxht[index]
+    # maxht = maxht[indexx]
+    flash_20 = np.divide(flashfrequence * 100, npixels_20)
+    flash_30 = np.divide(flashfrequence * 100, npixels_30)
+    flash_40 = np.divide(flashfrequence * 100, npixels_40)
+    maxht20_minux_maxht40 = maxht20 - maxht40
+    ellip_20 = np.divide(maxht20, npixels_20_R)
+    ellip_30 = np.divide(maxht30, npixels_30_R)
+    ellip_40 = np.divide(maxht40, npixels_40_R)
+    ellip_20_maxht20 = np.multiply(np.divide(maxht20, npixels_20_R), maxht20)
+    ellip_30_maxht30 = np.multiply(np.divide(maxht30, npixels_30_R), maxht30)
+    ellip_40_maxht40 = np.multiply(np.divide(maxht40, npixels_40_R), maxht40)
+    # 将所有的rainconv数据每一项除以volrain变成新的数据r数组
+    r = np.divide(rainconv, volrain)
+    index_add1 = list(np.where(r >= 0))
+    index_add2 = list(np.where(minir > 0))
+    index_add = list(set(index_add1[0]) & set(index_add2[0]))
+    """add"""
+    r = r[index_add]
+    boost = boost[index_add]
+    maxht20 = maxht20[index_add]
+    maxht30 = maxht30[index_add]
+    maxht40 = maxht40[index_add]
+    npixels_20 = npixels_20[index_add]
+    npixels_30 = npixels_30[index_add]
+    npixels_40 = npixels_40[index_add]
+    flash_20 = flash_20[index_add]
+    flash_30 = flash_30[index_add]
+    flash_40 = flash_40[index_add]
+    minir = minir[index_add]
+    flashrate = flashfrequence[index_add]
+    maxht20_minux_maxht40 = maxht20_minux_maxht40[index_add]
+    ellip_20 = ellip_20[index_add]
+    ellip_30 = ellip_30[index_add]
+    ellip_40 = ellip_40[index_add]
+    ellip_20_maxht20 = ellip_20_maxht20[index_add]
+    ellip_30_maxht30 = ellip_30_maxht30[index_add]
+    ellip_40_maxht40 = ellip_40_maxht40[index_add]
+    maxdbz = maxdbz[index_add]
+    maxht = maxht[index_add]
+    npixels_20_R = npixels_20_R[index_add]
+    npixels_30_R = npixels_30_R[index_add]
+    npixels_40_R = npixels_40_R[index_add]
+    npx40_divide_npx20 = np.divide(npixels_40_R, npixels_20_R)
+    npx40_divide_npx30 = np.divide(npixels_40_R, npixels_30_R)
+    Volume20 = n20_volume[index_add]
+    Volume40 = n40_volume[index_add]
+    n20 = n20[index_add]
+    n40 = n40[index_add]
+    mdbz = mdbz[index_add]
+    return n20, n40, mdbz, r, boost
+
+
+def for_(data, core_samples, labels, num=None, delete=None):
+    mid = []
+    if num==None:
+        for i in data:
+            i_mid = i[core_samples]
+            mid.append(i_mid[np.where(labels != delete)])
+    else:
+        for i in data:
+            i_mid = i[core_samples]
+            mid.append(i_mid[np.where(labels == num)])
+    return mid
+
+
+def duqu_excel_julei(path):
+    import pandas as pd
+    file_path = path
+    df = pd.read_excel(file_path, usecols=[1], names=None)
+    dali = df.values.tolist()
+    result = []
+    for i in dali:
+        result.append(i[0])
+    return result
+
+
+def chuli_mianji(n, boost):
+    n_yes = []
+    for i, j in zip(n, boost):
+        if j == 1:
+            n_yes.append(i * 5 * 5)
+        else:
+            n_yes.append(i * 4.3 * 4.3)
+    return n_yes
+
+
+"""程序开始"""
+# 程序发起点
+plt.rc('axes', linewidth=3)
+plt.tick_params(width=3)
+plt.rcParams["font.family"] = "Times New Roman"
+plt.rcParams["font.size"] = 40
+name = ['FlRate (fl' + r'$\cdot$' + r'min$^{-1}$)',
+        "Maxht20 (km)", "Maxht30 (km)", "Maxht40 (km)", "Area20 (km$^{2}$)",
+        "Area30 (km$^{2}$)", "Area40 (km$^{2}$)"]
+data = read_shuju()
+# data_add = read_shuju_ADD()
+# data_mid = []
+# for i, j in zip(data, data_add):
+#     data_mid.append(np.concatenate((i, j)))
+# data = data_mid
+# stage = duqu_excel_julei(r"C:\Users\lvyih\Desktop\stage.xlsx")
+# data_all = for_(data, stage)
+core_samples = np.load("./core_samples.npy")
+labels = np.load("./lables.npy")
+data1 = for_(data, core_samples, labels, 3)
+data2 = for_(data, core_samples, labels, 2)
+data3 = for_(data, core_samples, labels, 1)
+data4 = for_(data, core_samples, labels, 0)
+data = for_(data, core_samples, labels, None, 0)
+name_data = [data, data1, data2, data3]
+stage = ["All", "Development", "Maturity", "Dissipation"]
+Height_mdbz = np.arange(0, 20, 0.5)
+Height_n = np.arange(0, 20, 1.25)
+n40_all = np.mean(chuli_mianji(data[1], data[4]), axis=0)
+n40_develop = np.mean(chuli_mianji(data1[1], data1[4]), axis=0)
+n40_mature = np.mean(chuli_mianji(data2[1], data2[4]), axis=0)
+n40_dissi = np.mean(chuli_mianji(data3[1], data3[4]), axis=0)
+mdbz_all = np.mean(data[2], axis=0)
+mdbz_develop = np.mean(data1[2], axis=0)
+mdbz_mature = np.mean(data2[2], axis=0)
+mdbz_dissi = np.mean(data3[2], axis=0)
+n20_all = np.mean(chuli_mianji(data[0], data[4]), axis=0)
+n20_develop = np.mean(chuli_mianji(data1[0], data1[4]), axis=0)
+n20_mature = np.mean(chuli_mianji(data2[0], data2[4]), axis=0)
+n20_dissi = np.mean(chuli_mianji(data3[0], data3[4]), axis=0)
+all_parameter = [mdbz_all, n40_all, n20_all]
+develop_parameter = [mdbz_develop, n40_develop, n20_develop]
+mature_parameter = [mdbz_mature, n40_mature, n20_mature]
+dissi_parameter = [mdbz_dissi, n40_dissi, n20_dissi]
+# np.set_printoptions(threshold=np.inf)
+fig = plt.figure(figsize=(30, 15))
+abc = ["(a)", "(b)", "(c)"]
+for i in range(3):
+    ax = fig.add_subplot(1, 3, i+1)
+    if i == 0:
+        ax.plot(all_parameter[i], Height_mdbz, "black", marker="*",
+                label="ISOL", linewidth=4.33, markersize=12)
+        ax.plot(develop_parameter[i], Height_mdbz, "g", marker="^",
+                label="Pre-MT", linewidth=4.33, markersize=12)
+        ax.plot(mature_parameter[i], Height_mdbz, "r", marker="s",
+                label="MT", linewidth=4.33, markersize=12)
+        ax.plot(dissi_parameter[i], Height_mdbz, "b", marker="o",
+                label="Post-MT", linewidth=4.33, markersize=12)
+    else:
+        ax.plot(all_parameter[i], Height_n, "black", marker="*",
+                label="ISOL", linewidth=4.33, markersize=12)
+        ax.plot(develop_parameter[i], Height_n, "g", marker="^",
+                label="Pre-MT", linewidth=4.33, markersize=12)
+        ax.plot(mature_parameter[i], Height_n, "r", marker="s",
+                label="MT", linewidth=4.33, markersize=12)
+        ax.plot(dissi_parameter[i], Height_n, "b", marker="o",
+                label="Post-MT", linewidth=4.33, markersize=12)
+    # ax.set_xlim(10, None)
+    if i == 0:
+        ax.set_xticks(np.arange(0, 60, 10))
+        ax.set_xlim(0, 54.5)
+        ax.set_xlabel("MaxdBZ (dBZ)", fontsize=40)
+        ax.set_ylabel("Height (km)", fontsize=45)
+    elif i == 1:
+    # 尽管我们更改了整个图形的尺寸，但是可以通过以下set_xticks进行x轴标记的手动设置。
+        ax.set_xticks(np.arange(0, 600, 100))
+        ax.set_xlim(0, 345)
+        ax.set_xlabel("Area40 (km$^{2}$)", fontsize=40)
+    else:
+        ax.set_xticks(np.arange(0, 6000, 500))
+        ax.set_xlim(0, 1850)
+        ax.set_xlabel("Area20 (km$^{2}$)", fontsize=40)
+    ax.set_ylim(0, 21)
+    ax.text(0.05, 0.9, f"{abc[i]}", transform=ax.transAxes, fontsize=50)
+    ax.tick_params(axis="both", direction='out', which="major", length=10, width=2,
+                top=False, right=False)
+    ax.minorticks_on()
+    ax.tick_params(axis="both", direction="out", which="minor", length=6, width=1.5,
+                top=False, right=False)
+    ax.legend(fontsize=35)
+# n40_all = data[1]
+
+# n40_develop = data1[1]
+
+# n40_mature = data2[1]
+
+# n40_dissi = data3[1]
+
+# plt.rcParams["font.family"] = "Times New Roman"
+# plt.rcParams["font.size"] = 30
+# fig = plt.figure(1, figsize=(30, 15))
+# abcdef = ["(a)", "(b)", "(c)", "(d)", "(e)", "(f)"]
+# plt.tight_layout()
+# plt.title("Different Stages of boxplot", fontsize=40)
+# plt.yticks(fontsize=30)
+# plt.xticks(fontsize=30)
+plt.savefig(f"/root/git/Project_develop/figures/Vertical_Profile_all.jpeg", bbox_inches="tight", dpi=400)
+"""ax.text(
+        0.2, 0.1, 'some text',
+        horizontalalignment='center',  # 水平居中
+        verticalalignment='center',  # 垂直居中
+        transform=ax.transAxes  # 使用相对坐标
+    )"""
