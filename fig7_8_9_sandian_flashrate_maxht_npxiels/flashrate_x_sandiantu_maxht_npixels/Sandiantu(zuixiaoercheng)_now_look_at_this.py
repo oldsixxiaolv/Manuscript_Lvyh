@@ -236,7 +236,7 @@ def read_shuju():
     n20_volume = n20_volume[index_add]
     n40_volume = n40_volume[index_add]
     mdbz = mdbz[index_add]
-    return flashrate, maxht20, maxht30, maxht40, maxdbz, minir, npixels_20, npixels_30, npixels_40, n20_volume, n40_volume
+    return flashrate, maxht20, maxht30, maxht40, maxdbz, minir, npixels_20_R, npixels_30_R, npixels_40_R, n20_volume, n40_volume
 
 
 def for_(data, core_samples, labels, num=None, delete=None):
@@ -285,7 +285,7 @@ def _contour_(ax, x, y, levels):
     axx = ax.contour(X, Y, Z, colors="black", extend="both", linewidths=3.5, levels=levels)
     # font = FontProperties(weight='bold')
     def fmt(x):
-        return f"{x:.1f}" if x-0.1<0.0001 else f"{x:.0f}"
+        return f"{x:.1f}%" if x-0.1<0.0001 else f"{x:.0f}%"
     labels = plt.clabel(axx, inline=True, colors="black", fontsize=37, fmt=fmt)
     # 把所有 Text 对象加粗
     for txt in labels:
@@ -338,7 +338,7 @@ def for_j_and_mid(name_data, color_bar, ax, s):
 """程序开始"""
 # 程序发起点
 name = ["Flash", "Maxht20", "Maxht30", "Maxht40", "Maxdbz",
-        "Minir", "Area20", "Area30", "Area40", "Volume20", "Volume40"]
+        "Minir", "R$_{eq}$20", "R$_{eq}$30", "R$_{eq}$40", "Volume20", "Volume40"]
 data = read_shuju()
 for i in data:
     print(len(i))
@@ -383,7 +383,7 @@ name_data = [data, data1, data2, data3]
 stage = ["All Stage", "Pre-Mature Stage", "Mature Stage", "Post-Mature Stage"]
 coefficient = 0
 abcd = ["(a)", "(b)", "(c)", "(d)"]
-for j in range(0, 10):
+for j in range(7, 8):
     mid = 1
     for i in name_data:
         fig = plt.figure(coefficient, figsize=(30, 20))
@@ -399,7 +399,7 @@ for j in range(0, 10):
             flashrate = flashrate[index_40volu_0]
             parameter = parameter[index_40volu_0]
         # 用4次多项式拟合
-        if j < 5:
+        if j < 8:
             x = flashrate
             log_x = np.log(x)
             y = parameter
@@ -448,7 +448,7 @@ for j in range(0, 10):
             ax.loglog(x, np.exp(np.polyval(z1, log_x)), color_line, linewidth=5)  # label='Fit'
             ax.set_xscale('log')
             ax.set_yscale('log')
-        ax.set_xlabel('FlRate (fl' + r'$\cdot$' +r'min$^{-1}$)', fontsize=40)
+        ax.set_xlabel('FlRate (fl' + r'$\cdot$' +r'min$\mathregular{^{-1}}$)', fontsize=40)
         ax.set_xlim(0.4, 300)
         plt.yticks(fontsize=40)
         plt.xticks(fontsize=40)
@@ -461,15 +461,15 @@ for j in range(0, 10):
         elif j == 4:
             ax.set_ylabel(f"{name[j + 1]} (K)", fontsize=40)
         elif j == 5:
-            ax.set_ylabel(f"{name[j + 1]} (km$^{2}$)", fontsize=40)
+            ax.set_ylabel(f"{name[j + 1]} (km)", fontsize=40)
         elif j == 6:
-            ax.set_ylabel(f"{name[j + 1]} (km$^{2}$)", fontsize=40)
+            ax.set_ylabel(f"{name[j + 1]} (km)", fontsize=40)
         elif j == 7:
-            ax.set_ylabel(f"{name[j + 1]} (km$^{2}$)", fontsize=40)
+            ax.set_ylabel(f"{name[j + 1]} (km)", fontsize=40)
         elif j == 8:
-            ax.set_ylabel(f"{name[j + 1]} (km$^{3}$)", fontsize=40)
+            ax.set_ylabel(f"{name[j + 1]}" + "(km$\mathregular{^{3}}$)", fontsize=40)
         elif j == 9:
-            ax.set_ylabel(f"{name[j + 1]} (km$^{3}$)", fontsize=40)
+            ax.set_ylabel(f"{name[j + 1]}" + "(km$\mathregular{^{3}}$)", fontsize=40)
         # plt.legend() # 指定legend的位置,读者可以自己help它的用法
         ax.set_title(f"{stage[mid-1]}", fontsize=40)
         # Maturity stage
@@ -503,7 +503,7 @@ for j in range(0, 10):
             ax.text(0.8, 0.1, correlation_text, transform=ax.transAxes, fontsize=40)
             ax.text(0.8, 0.2, f"b = {round(intercept, 2)}", transform=ax.transAxes, fontsize=40)
             ax.text(0.8, 0.3, f"k = {round(slope, 2)}", transform=ax.transAxes, fontsize=40)
-            ax.set_ylim(5, 3000)
+            ax.set_ylim(0, 53)
         elif j == 8:
             ax.text(0.3, 0.15, equation_text, transform=ax.transAxes, fontsize=40)
             ax.text(0.3, 0.05, correlation_text, transform=ax.transAxes, fontsize=40)

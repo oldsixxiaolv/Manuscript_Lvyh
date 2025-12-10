@@ -261,6 +261,6 @@ axin1.hlines(100, 0, begin1, linestyles="dashed", color="#C00000", linewidth=4, 
 axin1.vlines(begin1, 0, 100, linestyles="dashed", color="#C00000", linewidth=4)
 axin2.set_ylim(-0.01, 0.4)
 axin.legend(loc=(0.08, 0.8), prop={"family": "Times New Roman", "size": 38})
-plt.savefig(r"/root/git/Project_develop/figures/xr_frequency_delete_num_less_100.jpeg", dpi=400)
+plt.savefig(r"/root/git/Project_develop/figures/fig2_xr_frequency_delete_num_less_100.jpeg", dpi=400)
 
 

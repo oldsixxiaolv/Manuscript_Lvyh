@@ -63,13 +63,13 @@ k = 0
 kk = 0
 # 这里提醒一下：只有这里的$\mathregular{^{-1}}$才可以让我们设置的字体格式可以全部识别
 name = [
-        r'Maxht20 (km)', r'Area20 (10$\mathregular{^{3}}$' + 'km$\mathregular{^{2}}$)',
-        r'Maxht40 (km)', r'Area40 (10$\mathregular{^{2}}$' + 'km$\mathregular{^{2}}$)',
+        r'Maxht20 (km)', r'R$_{eq}$20 (km)',
+        r'Maxht40 (km)', r'R$_{eq}$40 (km)',
         r'Volume20 (10$\mathregular{^{4}}$' + 'km$\mathregular{^{3}}$)',
         r'Volume40 (10$\mathregular{^{3}}$' + 'km$\mathregular{^{3}}$)',
         r'FlRate (fl' + r'$\cdot$' + r'min$\mathregular{^{-1}}$)',
-        r'Fl40 (fl' + r'$\cdot$' + r'(100' +
-                r'km)$\mathregular{^{-2}}$' + r'$\cdot$' + r'min$\mathregular{^{-1}}$)'
+        r'Fl40 (fl' + r'$\cdot$' + r'min$\mathregular{^{-1}}$' + r'$\cdot$' +
+        r'(100km)$\mathregular{^{-2}}$)'
         ]
 plt.rcParams["font.family"] = "Times New Roman"
 plt.rcParams["font.size"] = 80
@@ -90,6 +90,7 @@ for i in all_list[1:]:
     r = all_list[0]
     average_y = []
     labels = boxplot_x_labels()
+    labels[-1] = "0"
     boxplot_allshuju_two(r, average_y, i)
     # zuizhongy是将average_y的二维数据变成一维的
     zuizhongy = []
@@ -145,12 +146,13 @@ for i in all_list[1:]:
         ax.set_ylabel(name[k], fontsize=70)
     elif k == 1:
         ax1 = ax.twinx()
-        sns.boxplot(x="Ratio", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
+        seanborn =  sns.boxplot(x="Ratio", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
                     whis=0.6, data=df, showfliers=False, color=right_box_color,
                     width=0.2, linecolor=right_box_color, linewidth=5,
                     medianprops={"color": "black", "linewidth": 2})
-        ax1.set_yticks([0, 25, 50])
-        ax1.set_ylim(-2, 60)
+        seanborn.set_ylabel(f"{name[k]}", labelpad=25) 
+        ax1.set_yticks([0, 75, 150, 225])
+        ax1.set_ylim(-15, 275)
         ax1.set_ylabel(name[k], fontsize=70, color="red")
         ax1.tick_params(axis="y", colors="red")
         ax1.set_xticklabels(labels, font={"family": "Times New Roman", "size": 80})
@@ -180,8 +182,8 @@ for i in all_list[1:]:
         ax2.set_ylim(5, 18)
         # 我们再重新覆盖一层点给第二层画的箱型图为了好看
         ax3 = ax.twinx()
-        ax3.set_yticks([0, 25, 50])
-        ax3.set_ylim(-2, 60)
+        ax3.set_yticks([0, 75, 150, 225])
+        ax3.set_ylim(-15, 275)
         ax3.get_yaxis().set_visible(False)
         ax3.scatter(x, y, color="red")
         ax.get_xaxis().set_visible(False)
@@ -213,12 +215,13 @@ for i in all_list[1:]:
         ax.set_ylabel(name[k], fontsize=70)
     elif k == 3:
         ax1 = ax.twinx()
-        sns.boxplot(x="Ratio", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
+        seanborn =   sns.boxplot(x="Ratio", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
                     whis=0.6, data=df, showfliers=False, color=right_box_color,
                     width=0.2, linecolor=right_box_color, linewidth=5,
                     medianprops={"color": "black", "linewidth": 2})
-        ax1.set_yticks([0, 10, 20])
-        ax1.set_ylim(-1.5, 28.5)
+        seanborn.set_ylabel(f"{name[k]}", labelpad=25) 
+        ax1.set_yticks([0, 20, 40, 60])
+        ax1.set_ylim(-3, 75)
         ax1.set_ylabel(name[k], fontsize=70, color="red")
         ax1.tick_params(axis="y", colors="red")
         ax1.set_xticklabels(labels, font={"family": "Times New Roman", "size": 80})
@@ -248,8 +251,8 @@ for i in all_list[1:]:
         ax2.set_ylim(3.5, 11)
         # 我们再重新覆盖一层点给第二层画的箱型图为了好看
         ax3 = ax.twinx()
-        ax3.set_yticks([0, 10, 20])
-        ax3.set_ylim(-1.5, 28.5)
+        ax3.set_yticks([0, 20, 40, 60])
+        ax3.set_ylim(-3, 75)
         ax3.get_yaxis().set_visible(False)
         ax3.scatter(x, y, color="red")
         ax.get_xaxis().set_visible(False)
@@ -315,10 +318,11 @@ for i in all_list[1:]:
         ax.set_ylabel(name[k], fontsize=70)
     elif k == 7:
         ax1 = ax.twinx()
-        sns.boxplot(x="Ratio", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
+        seanborn =  sns.boxplot(x="Ratio", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
                     whis=0.6, data=df, showfliers=False, color=right_box_color, width=0.2,
                     linecolor=right_box_color, linewidth=5,
                     medianprops={"color": "black", "linewidth": 2})
+        seanborn.set_ylabel(f"name[k]", labelpad=25) 
         ax1.set_yticks([0, 4, 8, 12])
         ax1.set_ylim(-0.4, 12.5)
         ax1.set_ylabel(name[k], fontsize=70, color="red")
@@ -422,7 +426,7 @@ for i in all_list[1:]:
     # elif k == 6:
     #     ax.text(0.01, 0.86, "(e)", transform=ax.transAxes, fontsize=70)
     k += 1
-plt.savefig(f"/root/git/Project_develop/figures/maxht_volume_fls_boxplot_newest_include_all.jpeg",
+plt.savefig(f"/root/git/Project_develop/figures/fig3_maxht_volume_fls_boxplot_newest_include_all.jpeg",
             bbox_inches="tight", dpi=50)
 
 

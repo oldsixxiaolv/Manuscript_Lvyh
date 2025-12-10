@@ -244,9 +244,9 @@ def chuli_mianji(n, boost):
     n_yes = []
     for i, j in zip(n, boost):
         if j == 1:
-            n_yes.append(i * 5 * 5)
+            n_yes.append(np.sqrt((i * 5 * 5) * 4 / math.pi))
         else:
-            n_yes.append(i * 4.3 * 4.3)
+            n_yes.append(np.sqrt((i * 4.3 * 4.3) * 4 / math.pi))
     return n_yes
 
 
@@ -257,8 +257,8 @@ plt.tick_params(width=3)
 plt.rcParams["font.family"] = "Times New Roman"
 plt.rcParams["font.size"] = 40
 name = ['FlRate (fl' + r'$\cdot$' + r'min$^{-1}$)',
-        "Maxht20 (km)", "Maxht30 (km)", "Maxht40 (km)", "Area20 (km$^{2}$)",
-        "Area30 (km$^{2}$)", "Area40 (km$^{2}$)"]
+        "Maxht20 (km)", "Maxht30 (km)", "Maxht40 (km)", "R_eq20 (km)",
+        "R_eq30 (km$)", "R_eq40 (km$)"]
 data = read_shuju()
 # data_add = read_shuju_ADD()
 # data_mid = []
@@ -301,7 +301,7 @@ for i in range(3):
     ax = fig.add_subplot(1, 3, i+1)
     if i == 0:
         ax.plot(all_parameter[i], Height_mdbz, "black", marker="*",
-                label="ISOL", linewidth=4.33, markersize=12)
+                label="CS", linewidth=4.33, markersize=12)
         ax.plot(develop_parameter[i], Height_mdbz, "g", marker="^",
                 label="Pre-MT", linewidth=4.33, markersize=12)
         ax.plot(mature_parameter[i], Height_mdbz, "r", marker="s",
@@ -310,7 +310,7 @@ for i in range(3):
                 label="Post-MT", linewidth=4.33, markersize=12)
     else:
         ax.plot(all_parameter[i], Height_n, "black", marker="*",
-                label="ISOL", linewidth=4.33, markersize=12)
+                label="CS", linewidth=4.33, markersize=12)
         ax.plot(develop_parameter[i], Height_n, "g", marker="^",
                 label="Pre-MT", linewidth=4.33, markersize=12)
         ax.plot(mature_parameter[i], Height_n, "r", marker="s",
@@ -325,13 +325,13 @@ for i in range(3):
         ax.set_ylabel("Height (km)", fontsize=45)
     elif i == 1:
     # 尽管我们更改了整个图形的尺寸，但是可以通过以下set_xticks进行x轴标记的手动设置。
-        ax.set_xticks(np.arange(0, 600, 100))
-        ax.set_xlim(0, 345)
-        ax.set_xlabel("Area40 (km$^{2}$)", fontsize=40)
+        ax.set_xticks(np.arange(0, 21, 4))
+        ax.set_xlim(0, 22)
+        ax.set_xlabel("R$_{eq}$40 (km)", fontsize=40)
     else:
-        ax.set_xticks(np.arange(0, 6000, 500))
-        ax.set_xlim(0, 1850)
-        ax.set_xlabel("Area20 (km$^{2}$)", fontsize=40)
+        ax.set_xticks(np.arange(0, 51, 10))
+        ax.set_xlim(0, 55)
+        ax.set_xlabel("R$_{eq}$20 (km)", fontsize=40)
     ax.set_ylim(0, 21)
     ax.text(0.05, 0.9, f"{abc[i]}", transform=ax.transAxes, fontsize=50)
     ax.tick_params(axis="both", direction='out', which="major", length=10, width=2,
@@ -356,7 +356,7 @@ for i in range(3):
 # plt.title("Different Stages of boxplot", fontsize=40)
 # plt.yticks(fontsize=30)
 # plt.xticks(fontsize=30)
-plt.savefig(f"/root/git/Project_develop/figures/Vertical_Profile_all.jpeg", bbox_inches="tight", dpi=400)
+plt.savefig(f"/root/git/Project_develop/figures/fig6_Vertical_Profile_all.jpeg", bbox_inches="tight", dpi=400)
 """ax.text(
         0.2, 0.1, 'some text',
         horizontalalignment='center',  # 水平居中

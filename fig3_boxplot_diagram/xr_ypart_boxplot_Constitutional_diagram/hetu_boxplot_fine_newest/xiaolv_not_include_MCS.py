@@ -64,13 +64,13 @@ k = 0
 kk = 0
 # 这里提醒一下：只有这里的$\mathregular{^{-1}}$才可以让我们设置的字体格式可以全部识别
 name = [
-        r'Maxht20 (km)', r'Area20 (10$\mathregular{^{3}}$' + 'km$\mathregular{^{2}}$)',
-        r'Maxht40 (km)', r'Area40 (10$\mathregular{^{2}}$' + 'km$\mathregular{^{2}}$)',
+        r'Maxht20 (km)', r'R$_{eq}$20 (km)',
+        r'Maxht40 (km)', r'R$_{eq}$40 (km)',
         r'Volume20 (10$\mathregular{^{4}}$' + 'km$\mathregular{^{3}}$)',
         r'Volume40 (10$\mathregular{^{3}}$' + 'km$\mathregular{^{3}}$)',
         r'FlRate (fl' + r'$\cdot$' + r'min$\mathregular{^{-1}}$)',
-        r'Fl40 (fl' + r'$\cdot$' + r'(100' +
-                r'km)$\mathregular{^{-2}}$' + r'$\cdot$' + r'min$\mathregular{^{-1}}$)'
+        r'Fl40 (fl' + r'$\cdot$' + r'min$\mathregular{^{-1}}$' + r'$\cdot$' +
+        r'(100km)$\mathregular{^{-2}}$)'
         ]
 plt.rcParams["font.family"] = "Times New Roman"
 plt.rcParams["font.size"] = 80
@@ -91,6 +91,7 @@ for i in all_list[1:]:
     r = all_list[0]
     average_y = []
     labels = boxplot_x_labels()
+    labels[-1] = "0"
     boxplot_allshuju_two(r, average_y, i)
     # zuizhongy是将average_y的二维数据变成一维的
     zuizhongy = []
@@ -117,7 +118,7 @@ for i in all_list[1:]:
     x = all["Ratio"]
     print(x)
     print(type(x))
-    # 利用以下的代码可以对plt的图中进行x轴或者y轴标签或者刻度进行字体等的设置
+ # 利用以下的代码可以对plt的图中进行x轴或者y轴标签或者刻度进行字体等的设置
     if k == 0:
         sns.boxplot(x="Ratio", y=name[k], ax=ax, positions=[i - di for i in range(0, r_threshold)],
                     whis=0.6, data=df, showfliers=False, color=left_box_color,
@@ -423,7 +424,7 @@ for i in all_list[1:]:
     # elif k == 6:
     #     ax.text(0.01, 0.86, "(e)", transform=ax.transAxes, fontsize=70)
     k += 1
-plt.savefig(f"/root/git/Project_develop/figures/maxht_volume_fls_boxplot_newest_not_include_MCS.jpeg",
+plt.savefig(f"/root/git/Project_develop/figures/Appendix_maxht_volume_fls_boxplot_newest_not_include_MCS.jpeg",
             bbox_inches="tight", dpi=50)
 
 

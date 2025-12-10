@@ -206,7 +206,7 @@ def read_shuju():
     npx40_divide_npx30 = np.divide(npixels_40_R, npixels_30_R)
     Volume20 = n20_volume[index_add]
     Volume40 = n40_volume[index_add]
-    return maxht20, maxht30, maxht40, flashrate, npixels_20, npixels_30, npixels_40, flash_40, r, flash_20, flash_30, flash_40, minir,\
+    return maxht20, maxht30, maxht40, flashrate, npixels_20_R, npixels_30_R, npixels_40_R, flash_40, r, flash_20, flash_30, flash_40, minir,\
         flashrate, maxht20_minux_maxht40, ellip_20, ellip_30, ellip_40, maxdbz,\
         maxht, npx40_divide_npx20, npx40_divide_npx30, ellip_20_maxht20, ellip_30_maxht30, ellip_40_maxht40, Volume20, Volume40
 # n20dbz, n30dbz, n40dbz, maxdbz
@@ -249,10 +249,9 @@ def ten_nine(x, former, latter):
 plt.rc('axes', linewidth=3)
 plt.tick_params(width=3)
 name = ["Maxht20 (km)", "Maxht30 (km)", "Maxht40 (km)", r'FlRate (fl' + r'$\cdot$' + r'min$\mathregular{^{-1}}$)',
-        r"Area20 (km$\mathregular{^{2}}$)",
-        r"Area30 (km$\mathregular{^{2}}$)", r"Area40 (km$\mathregular{^{2}}$)",
-        r'Fl40 (fl' + r'$\cdot$' + r'(100km)$\mathregular{^{-2}}$' +
-                r'$\cdot$' + r'min$\mathregular{^{-1}}$)']
+        r"R$_{eq}$20 (km)",
+        r"R$_{eq}$30 (km)", r"R$_{eq}$40 (km)",
+        r'Fl40 (fl' + r'$\cdot$' +  r'min$\mathregular{^{-1}}$' + r'$\cdot$' + r'(100km)$\mathregular{^{-2}}$)']
 data = read_shuju()
 # data_add = read_shuju_ADD()
 # data_mid = []
@@ -266,6 +265,7 @@ print(len(labels))
 data1 = for_(data, core_samples, labels, 3)
 data2 = for_(data, core_samples, labels, 2)
 data3 = for_(data, core_samples, labels, 1)
+data4 = for_(data, core_samples, labels, 0)
 data = for_(data, core_samples, labels, None, 0)
 # data4 = for_(data, stage4)
 # data5 = for_(data, stage5)
@@ -275,14 +275,15 @@ data = for_(data, core_samples, labels, None, 0)
 print(np.mean(data1[8]))
 print(np.mean(data2[8]))
 print(np.mean(data3[8]))
+print(np.mean(data4[8]))
 # print(np.mean(data4[7]))
 # print(np.mean(data5[7]))
 # print(len(data3[0]))
 # print(len(data2[0]))
 # print(len(data2[0]))
-stage = ["All", "Pre-MT", "MT", "Post-MT"]
+stage = ["ES", "CS", "Pre-MT", "MT", "Post-MT"]
 coefficient = 0
-fig = plt.figure(coefficient, figsize=(38, 18))
+fig = plt.figure(coefficient, figsize=(46, 18))
 plt.rcParams["font.family"] = "Times New Roman"
 plt.rcParams["font.size"] = 35
 mid = 1
@@ -297,6 +298,7 @@ for j in range(0, 8):
     # Maturity = Maturity[ten_nine(Maturity, 0, 1)]
     # Post_Maturity = data4[j]
     Dissipation = data3[j]
+    MCS = data4[j]
     # Dissipation = Dissipation[ten_nine(Dissipation, 0, 1)]
     ax = fig.add_subplot(2, 4, mid)
     ax.spines["right"].set_visible(False)
@@ -308,40 +310,68 @@ for j in range(0, 8):
     elif j == 2:
         ax.set_ylim(-0.7, 20.5)
     elif j == 3:
-        ax.set_ylim(-1, 24)
+        ax.set_ylim(-1, 85)
     elif j == 4:
-        ax.set_ylim(-120, 4010)
+        ax.set_ylim(-5, 225)
     elif j == 5:
-        ax.set_ylim(-60, 2100)
+        ax.set_ylim(-4.5, 185)
     elif j == 6:
-        ax.set_ylim(-30, 810)
+        ax.set_ylim(-2.6, 80)
     elif j == 7:
         # for fls30
         # ax.set_ylim(-0.1, 3.3)
         # for fls40
-        ax.set_ylim(-0.2, 8.7)
-    ax.tick_params(direction='in', which="major", length=10, width=2,
-                   top=False, right=False)
+        ax.set_ylim(-0.2, 12.7)
+    ax.tick_params(axis="y", direction='in', which="major", length=10, width=2,
+                   right=False, left=True)
+    ax.tick_params(axis="x", direction='in', which="major", length=10, width=2,
+                   top=False, bottom=True)
     # 用于设置y轴的刻度的大小即yticks的大小
     ax.tick_params(axis="y", labelsize=38)
-    ax.minorticks_on()
-    ax.tick_params(direction="in", which="minor", length=6, width=1.5,
-                   top=False, right=False, bottom=False)
-    ax.boxplot([ALL_STAGE, Pre_Maturity, Maturity, Dissipation], widths=0.4,
-               showmeans=True, showfliers=False, whis=1, medianprops={"c": "black"},
-               whiskerprops={"linestyle": "--", "linewidth": 2, "c": "black"})
+    ax.tick_params(axis="y", direction="in", which="minor", length=6, width=1.5,
+                   right=False, left=True)
     ax.set_xticklabels(stage)
+    ax.minorticks_on()
+    box_dict = ax.boxplot([MCS, ALL_STAGE, Pre_Maturity, Maturity, Dissipation], widths=0.4,
+               showmeans=False, showfliers=False, whis=(5, 95), medianprops={"c": "black"},
+               whiskerprops={"linestyle": "--", "linewidth": 2, "c": "black"}, patch_artist=True)
+    mean_values = [d.mean() for d in [MCS, ALL_STAGE, Pre_Maturity, Maturity, Dissipation]]
+    colors = ["#FF851B", "#003366", "g", "r", "b"]
+    markers = ['o', '^', '^', '^', '^']
+    for i, (m, marker, col) in enumerate(zip(mean_values, markers, colors)):
+        # x 轴位置是 i+1（boxplot 从 1 开始）
+        ax.scatter(i+1, m, color=col, marker=marker, s=160, zorder=5)
+    # 设置单个的箱型图相关设置
+    for patch, color in zip(box_dict['boxes'], colors):
+        patch.set_facecolor("white")
+        patch.set_edgecolor(color)
+        patch.set_linewidth(2)
+
+    # 2. 须线、顶/底横线（caps）
+    for i, color in enumerate(colors):
+        # 每箱 2 根须线 + 2 根 caps
+        for w in box_dict['whiskers'][i*2:i*2+2]:
+            w.set_color(color)
+            w.set_linewidth(2)
+        for c in box_dict['caps'][i*2:i*2+2]:   # caps 也是成对出现
+            c.set_color(color)
+            c.set_linewidth(2)
+
+    # 3. 中位数线
+    for median, color in zip(box_dict['medians'], colors):
+        median.set_color(color)   # 也可设成 color 变量
+        median.set_linewidth(2)
     # ax.set_xlabel(fontsize=40)
     # ax.set_yticks(fontsize=30)
     # ax.set_xticks(fontsize=30)
     ax.set_title(f"{name[j]}", fontsize=40)
-    ax.text(0.04, 0.9, abcdef[j], transform=ax.transAxes, fontsize=50)
+    ax.text(0.86, 0.9, abcdef[j], transform=ax.transAxes, fontsize=50)
     mid += 1
 # plt.tight_layout(h_pad=0.5)
 # plt.title("Different Stages of boxplot", fontsize=40)
 # plt.yticks(fontsize=30)
 # plt.xticks(fontsize=30)
-plt.savefig(f"/root/git/Project_develop/figures/stage_boxplot.jpeg", bbox_inches="tight", dpi=400)
+plt.savefig(f"/root/git/Project_develop/figures/Appendix_MCS_and_all_stage_boxplot.jpeg", bbox_inches="tight", dpi=400)
 """ax.text(
         0.2, 0.1, 'some text',
         horizontalalignment='center',  # 水平居中
