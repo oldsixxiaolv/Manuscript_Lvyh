@@ -257,8 +257,8 @@ plt.tick_params(width=3)
 plt.rcParams["font.family"] = "Times New Roman"
 plt.rcParams["font.size"] = 40
 name = ['FlRate (fl' + r'$\cdot$' + r'min$^{-1}$)',
-        "Maxht20 (km)", "Maxht30 (km)", "Maxht40 (km)", "R_eq20 (km)",
-        "R_eq30 (km$)", "R_eq40 (km$)"]
+        "Maxht20 (km)", "Maxht30 (km)", "Maxht40 (km)", "D20eq (km)",
+        "D30eq (km$)", "D40eq (km$)"]
 data = read_shuju()
 # data_add = read_shuju_ADD()
 # data_mid = []
@@ -327,11 +327,11 @@ for i in range(3):
     # 尽管我们更改了整个图形的尺寸，但是可以通过以下set_xticks进行x轴标记的手动设置。
         ax.set_xticks(np.arange(0, 21, 4))
         ax.set_xlim(0, 22)
-        ax.set_xlabel("R$_{eq}$40 (km)", fontsize=40)
+        ax.set_xlabel("D40$_{eq}$ (km)", fontsize=40)
     else:
         ax.set_xticks(np.arange(0, 51, 10))
         ax.set_xlim(0, 55)
-        ax.set_xlabel("R$_{eq}$20 (km)", fontsize=40)
+        ax.set_xlabel("D20$_{eq}$ (km)", fontsize=40)
     ax.set_ylim(0, 21)
     ax.text(0.05, 0.9, f"{abc[i]}", transform=ax.transAxes, fontsize=50)
     ax.tick_params(axis="both", direction='out', which="major", length=10, width=2,

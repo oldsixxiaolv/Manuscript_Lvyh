@@ -103,9 +103,9 @@ fig, ax2 = plt.subplots(1, 1, figsize=(40, 16.75))
 """先绘制第一层图形"""
 # 这里的plot加上一个"r"的意思是指明线是红色的
 ax2.plot(labels, frequency_CS, color="#003366", linewidth=8, label="Compact Storms (CS)")
-ax2.fill_between(labels, frequency_CS, color="#1966B2", alpha=0.6)
+ax2.fill_between(labels, frequency_CS, color="#99A7D4", alpha=0.6)
 ax2.plot(labels, frequency_ES, color="#FF851B", linewidth=8, label="Extensive Storms (ES)")
-ax2.fill_between(labels, frequency_ES, color="#CC7326", alpha=0.6)
+ax2.fill_between(labels, frequency_ES, color="#FFD7A6", alpha=0.6)
 ax2.set_yticks(np.array(list(map(round2, list(np.arange(0, 5500, 1000))))))
 ax2.set_ylabel("Frequence (#)", font={"family": "Times New Roman", "size": 75}, labelpad=20)
 ax2.set_yticklabels(np.array(list(map(round2, list(np.arange(0, 5500, 1000))))),
@@ -135,6 +135,8 @@ ax2.set_xlim(-0.012, 1.007)
 # ax2.get_yaxis().set_visible(False)
 ax2.tick_params(axis="x", which="major", length=7.5, width=3, pad=10)
 ax2.tick_params(axis="y", which="major", length=15, width=3, pad=10)
+# 不要x轴的标签
+ax2.get_xaxis().set_visible(False)
 # 手动调整一下x轴的刻度值的长度
 xticks = ax2.xaxis.get_major_ticks()
 for i in range(0, 101, 5):
@@ -142,6 +144,6 @@ for i in range(0, 101, 5):
 ax2.tick_params(axis="x", which="minor", length=8, width=2)
 ax2.legend(loc=(0.62, 0.75), prop={"family": "Times New Roman", "size": 63})
 # ax2.yaxis.tick_right()
-plt.savefig(r"/root/git/Project_develop/figures/fig4_xr_frequency_ES_and_CS.jpeg", dpi=400)
+plt.savefig(r"/root/git/Project_develop/figures/fig4_xr_frequency_ES_and_CS.jpeg", bbox_inches='tight', dpi=400)
 
 

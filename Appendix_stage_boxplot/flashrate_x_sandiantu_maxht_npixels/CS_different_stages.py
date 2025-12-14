@@ -249,9 +249,9 @@ def ten_nine(x, former, latter):
 plt.rc('axes', linewidth=3)
 plt.tick_params(width=3)
 name = ["Maxht20 (km)", "Maxht30 (km)", "Maxht40 (km)", r'FlRate (fl' + r'$\cdot$' + r'min$\mathregular{^{-1}}$)',
-        r"R$_{eq}$20 (km)",
-        r"R$_{eq}$30 (km)", r"R$_{eq}$40 (km)",
-        r'Fl40 (fl' + r'$\cdot$' +  r'min$\mathregular{^{-1}}$' + r'$\cdot$' + r'(100km)$\mathregular{^{-2}}$)']
+        r"D20$_{eq}$ (km)",
+        r"D30$_{eq}$ (km)", r"D40$_{eq}$ (km)",
+        r'FD$_{40}$ (fl' + r'$\cdot$' +  r'min$\mathregular{^{-1}}$' + r'$\cdot$' + r'(100km)$\mathregular{^{-2}}$)']
 data = read_shuju()
 # data_add = read_shuju_ADD()
 # data_mid = []

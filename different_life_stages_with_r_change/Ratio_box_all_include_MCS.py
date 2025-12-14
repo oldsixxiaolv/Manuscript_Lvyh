@@ -295,7 +295,7 @@ print(np.mean(data3[8]))
 # print(len(data3[0]))
 # print(len(data2[0]))
 # print(len(data2[0]))
-stage = ["ES", "CS", "Pre-MT", "MT", "Post-MT"]
+stage = ["Pre-MT", "MT", "Post-MT"]
 coefficient = 0
 fig = plt.figure(coefficient, figsize=(40, 7))
 plt.rcParams["font.family"] = "Times New Roman"
@@ -323,9 +323,9 @@ for j in range(8, 9):
     ax.tick_params(axis="y", direction='out', which="major", length=15, width=2, pad=15)
     ax.yaxis.set_tick_params(pad=15)
     ax.minorticks_on()
-    ax.set_yticklabels(stage[2:], fontsize=55)
+    ax.set_yticklabels(stage, fontsize=55)
     ax.set_xticks([w for w in range(0, 101)])
-    ax.set_xlim(-1, 40-0.2)
+    ax.set_xlim(-1, 101-0.2)
     ax.set_xlabel("Ratio", fontsize=75)
     xticks = ax.xaxis.get_major_ticks()
     for i in range(0, 101, 5):
@@ -337,9 +337,15 @@ for j in range(8, 9):
     #            showmeans=True, showfliers=False, whis=1, medianprops={"c": "black"},
     #            whiskerprops={"linestyle": "--", "linewidth": 2, "c": "black"})
     box_dict = ax.boxplot([Pre_Maturity, Maturity, Dissipation], widths=0.4,
-                           showmeans=True, showfliers=False, whis=(5, 95), medianprops={"c": "black"}, meanprops={"markersize": 30},
+            showmeans=False, showfliers=False, whis=(5, 95), medianprops={"c": "black"}, meanprops={"markersize": 30},
                            whiskerprops={"linestyle": "--", "linewidth": 2, "c": "black"}, patch_artist=True, vert=False)
-    colors = ["green", "red", "blue"]
+    mean_values = [d.mean() for d in [Pre_Maturity, Maturity, Dissipation]]
+    colors = ["g", "r", "b"]
+    markers = ['^', '^', '^']
+    for i, (m, marker, col) in enumerate(zip(mean_values, markers, colors)):
+        # x 轴位置是 i+1（boxplot 从 1 开始）
+        ax.scatter(m, i+1, color=col, marker=marker, s=300, zorder=5)
+
     # 设置单个的箱型图相关设置
     for patch, color in zip(box_dict['boxes'], colors):
         patch.set_facecolor("white")
@@ -371,7 +377,7 @@ for j in range(8, 9):
 # plt.title("Different Stages of boxplot", fontsize=40)
 # plt.yticks(fontsize=30)
 # plt.xticks(fontsize=30)
-plt.savefig(f"/root/git/Project_develop/figures/fig5_Ratio_boxplot_include_MCS.jpeg", bbox_inches="tight", dpi=400)
+plt.savefig(f"/root/git/Project_develop/figures/Ceshi_Ratio_boxplot_Pre_Mature_Post.jpeg", bbox_inches="tight", dpi=400)
 """ax.text(
         0.2, 0.1, 'some text',
         horizontalalignment='center',  # 水平居中

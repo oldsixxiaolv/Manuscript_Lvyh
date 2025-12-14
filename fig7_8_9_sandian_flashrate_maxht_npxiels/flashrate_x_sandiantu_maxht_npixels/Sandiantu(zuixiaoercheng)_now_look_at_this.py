@@ -338,7 +338,7 @@ def for_j_and_mid(name_data, color_bar, ax, s):
 """程序开始"""
 # 程序发起点
 name = ["Flash", "Maxht20", "Maxht30", "Maxht40", "Maxdbz",
-        "Minir", "R$_{eq}$20", "R$_{eq}$30", "R$_{eq}$40", "Volume20", "Volume40"]
+        "Minir", "D20$_{eq}$", "D30$_{eq}$", "D40$_{eq}$", "Volume20", "Volume40"]
 data = read_shuju()
 for i in data:
     print(len(i))
@@ -454,7 +454,7 @@ for j in range(7, 8):
         plt.xticks(fontsize=40)
         color_bar = ["black", "g", "red", "blue"]
         if j <= 2:
-            ax.set_ylabel(f"{name[j+1]} (km)", fontsize=40)
+            ax.set_ylabel(f"{name[j + 1]} (km)", fontsize=40)
         elif j == 3:
             # ax.set_ylabel(f"{name[j+1]}/km" + "$^{2}$", fontsize=40)
             ax.set_ylabel(f"{name[j + 1]} (dBZ)", fontsize=40)

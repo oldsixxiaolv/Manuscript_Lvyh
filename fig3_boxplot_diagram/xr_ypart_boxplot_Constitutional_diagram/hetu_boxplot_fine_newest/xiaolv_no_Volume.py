@@ -56,20 +56,19 @@ def duqu_excel_julei(path):
 all_list = read_shuju()
 core_samples = np.load("./core_samples.npy")
 labels = np.load("./lables.npy")
-print(len(all_list[0]))
 print(labels)
 print(len(labels))
-all_list = for_(all_list, core_samples, labels, None, 0)
+# all_list = for_(all_list, core_samples, labels, None, 0)
 k = 0
 kk = 0
 # 这里提醒一下：只有这里的$\mathregular{^{-1}}$才可以让我们设置的字体格式可以全部识别
 name = [
-        r'Maxht20 (km)', r'R$_{eq}$20 (km)',
-        r'Maxht40 (km)', r'R$_{eq}$40 (km)',
+        r'Maxht20 (km)', r'D20$_{eq}$ (km)',
+        r'Maxht40 (km)', r'D40$_{eq}$ (km)',
         r'Volume20 (10$\mathregular{^{4}}$' + 'km$\mathregular{^{3}}$)',
         r'Volume40 (10$\mathregular{^{3}}$' + 'km$\mathregular{^{3}}$)',
         r'FlRate (fl' + r'$\cdot$' + r'min$\mathregular{^{-1}}$)',
-        r'Fl40 (fl' + r'$\cdot$' + r'min$\mathregular{^{-1}}$' + r'$\cdot$' +
+        r'FD$_{40}$ (fl' + r'$\cdot$' + r'min$\mathregular{^{-1}}$' + r'$\cdot$' +
         r'(100km)$\mathregular{^{-2}}$)'
         ]
 plt.rcParams["font.family"] = "Times New Roman"
@@ -78,20 +77,20 @@ plt.rcParams["lines.color"] = "red"
 ##########
 plt.rc('axes', linewidth=2)
 plt.tick_params(width=2)
-fig = plt.figure(figsize=(50, 60))
+fig = plt.figure(figsize=(60, 36))
 ##########
 # 这是对fig进行更准确地划分的东西
-gs = GridSpec(150, 1, figure=fig)
-legend = ["(a)", "(b)", "(c)", "(d)", "(e)"]
+gs = GridSpec(90, 1, figure=fig)
+legend = ["(b)", "(c)", "(d)"]
 # average_y是我们需要求的每一个分段的flashfrequence的值。
 for i in all_list[1:]:
-    if k == 0 or k == 2 or k == 4 or k == 5 or k == 6:
+    if k == 0 or k == 2 or k == 6:
         ax = fig.add_subplot(gs[30 * kk:30 * (kk + 1)])
         kk += 1
     r = all_list[0]
     average_y = []
     labels = boxplot_x_labels()
-    labels[-1] = 0.6
+    labels[-1] = "0"
     boxplot_allshuju_two(r, average_y, i)
     # zuizhongy是将average_y的二维数据变成一维的
     zuizhongy = []
@@ -110,7 +109,7 @@ for i in all_list[1:]:
     # 求平均值
     all = df.groupby('Ratio', as_index=False).mean()
     di = 0.195
-    r_threshold = 40
+    r_threshold = 101
     left_box_color = '#A6A5A5'
     right_box_color = '#FE4F4F'
     line_width = 8
@@ -118,7 +117,7 @@ for i in all_list[1:]:
     x = all["Ratio"]
     print(x)
     print(type(x))
- # 利用以下的代码可以对plt的图中进行x轴或者y轴标签或者刻度进行字体等的设置
+    # 利用以下的代码可以对plt的图中进行x轴或者y轴标签或者刻度进行字体等的设置
     if k == 0:
         sns.boxplot(x="Ratio", y=name[k], ax=ax, positions=[i - di for i in range(0, r_threshold)],
                     whis=0.6, data=df, showfliers=False, color=left_box_color,
@@ -126,7 +125,7 @@ for i in all_list[1:]:
                     medianprops={"color": "black", "linewidth": 2})
         ax.set_yticks([6, 9, 12, 15])
         ax.set_ylim(5, 18)
-        ax.text(0.01, 0.89, "(a)", transform=ax.transAxes, fontsize=75)
+        ax.text(0.01, 0.89, "(b)", transform=ax.transAxes, fontsize=75)
         ax.tick_params(axis="x", direction='out', which="major", length=10, width=2, pad=15,
                        top=False, right=False)
         ax.tick_params(axis="y", direction='out', which="major", length=15, width=2, pad=15,
@@ -147,12 +146,13 @@ for i in all_list[1:]:
         ax.set_ylabel(name[k], fontsize=70)
     elif k == 1:
         ax1 = ax.twinx()
-        sns.boxplot(x="Ratio", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
+        seanborn =  sns.boxplot(x="Ratio", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
                     whis=0.6, data=df, showfliers=False, color=right_box_color,
                     width=0.2, linecolor=right_box_color, linewidth=5,
                     medianprops={"color": "black", "linewidth": 2})
-        ax1.set_yticks([0, 20, 40, 60])
-        ax1.set_ylim(7, 75)
+        seanborn.set_ylabel(f"{name[k]}", labelpad=25) 
+        ax1.set_yticks([0, 75, 150, 225])
+        ax1.set_ylim(-15, 275)
         ax1.set_ylabel(name[k], fontsize=70, color="red")
         ax1.tick_params(axis="y", colors="red")
         ax1.set_xticklabels(labels, font={"family": "Times New Roman", "size": 80})
@@ -182,8 +182,8 @@ for i in all_list[1:]:
         ax2.set_ylim(5, 18)
         # 我们再重新覆盖一层点给第二层画的箱型图为了好看
         ax3 = ax.twinx()
-        ax3.set_yticks([0, 20, 40, 60])
-        ax3.set_ylim(7, 75)
+        ax3.set_yticks([0, 75, 150, 225])
+        ax3.set_ylim(-15, 275)
         ax3.get_yaxis().set_visible(False)
         ax3.scatter(x, y, color="red")
         ax.get_xaxis().set_visible(False)
@@ -192,9 +192,9 @@ for i in all_list[1:]:
                     whis=0.6, data=df, showfliers=False, color=left_box_color,
                     width=0.2, linecolor=left_box_color, linewidth=5,
                     medianprops={"color": "black", "linewidth": 2})
-        ax.set_yticks([5, 7, 9])
-        ax.set_ylim(3.5, 10)
-        ax.text(0.01, 0.89, "(b)", transform=ax.transAxes, fontsize=75)
+        ax.set_yticks([4, 7, 10])
+        ax.set_ylim(3.5, 11)
+        ax.text(0.01, 0.89, "(c)", transform=ax.transAxes, fontsize=75)
         ax.tick_params(axis="x", direction='out', which="major", length=10, width=2, pad=15,
                        top=False, right=False)
         ax.tick_params(axis="y", direction='out', which="major", length=15, width=2, pad=15,
@@ -215,12 +215,13 @@ for i in all_list[1:]:
         ax.set_ylabel(name[k], fontsize=70)
     elif k == 3:
         ax1 = ax.twinx()
-        sns.boxplot(x="Ratio", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
+        seanborn =   sns.boxplot(x="Ratio", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
                     whis=0.6, data=df, showfliers=False, color=right_box_color,
                     width=0.2, linecolor=right_box_color, linewidth=5,
                     medianprops={"color": "black", "linewidth": 2})
-        ax1.set_yticks([2, 8, 14, 20, 26])
-        ax1.set_ylim(1, 29)
+        seanborn.set_ylabel(f"{name[k]}", labelpad=25) 
+        ax1.set_yticks([0, 20, 40, 60])
+        ax1.set_ylim(-3, 75)
         ax1.set_ylabel(name[k], fontsize=70, color="red")
         ax1.tick_params(axis="y", colors="red")
         ax1.set_xticklabels(labels, font={"family": "Times New Roman", "size": 80})
@@ -246,56 +247,24 @@ for i in all_list[1:]:
         ax2.plot(x_chucun, y_chucun, linestyle='-', linewidth=line_width, color="black", label="average_line", marker=".",
                  markersize="10")
         ax2.get_yaxis().set_visible(False)
-        ax2.set_yticks([5, 7, 9])
-        ax2.set_ylim(3.5, 10)
+        ax2.set_yticks([4, 7, 10])
+        ax2.set_ylim(3.5, 11)
         # 我们再重新覆盖一层点给第二层画的箱型图为了好看
         ax3 = ax.twinx()
-        ax3.set_yticks([2, 8, 14, 20, 26])
-        ax3.set_ylim(1, 29)
+        ax3.set_yticks([0, 20, 40, 60])
+        ax3.set_ylim(-3, 75)
         ax3.get_yaxis().set_visible(False)
         ax3.scatter(x, y, color="red")
         ax.get_xaxis().set_visible(False)
     elif k == 4 or k == 5:
-        sns.boxplot(x="Ratio", y=name[k], ax=ax,
-                    whis=0.6, data=df, showfliers=False, color=left_box_color,
-                    width=0.2, linecolor=left_box_color, linewidth=5,
-                    medianprops={"color": "black", "linewidth": 2})
-        ax.plot(x, y, linestyle='-', linewidth=line_width, color="black", label="average_line", marker=".",
-                markersize="10")
-        if k == 4:
-            ax.set_yticks([0, 1, 2, 3])
-            ax.set_ylim(-0.3, 3.3)
-            ax.text(0.01, 0.89, "(c)", transform=ax.transAxes, fontsize=75)
-            ax.set_ylabel(name[k], fontsize=70)
-            ax.get_xaxis().set_visible(False)
-        else:
-            ax.set_yticks([0, 1, 2])
-            ax.set_ylim(-0.3, 2.7)
-            ax.text(0.01, 0.89, "(d)", transform=ax.transAxes, fontsize=75)
-            ax.set_ylabel(name[k], fontsize=70)
-        ax.tick_params(axis="x", direction='out', which="major", length=10, width=2, pad=15,
-                       top=False, right=False)
-        ax.tick_params(axis="y", direction='out', which="major", length=15, width=2, pad=15,
-                       top=False, right=False)
-        xticks = ax.xaxis.get_major_ticks()
-        for i in range(0, r_threshold, 5):
-            xticks[i].tick1line.set_markersize(18)
-        # 连接空值左右两边的点画折线图，这里我们使用了xticks强制让折线偏移
-        x = [i for i in range(0, r_threshold)]
-        ax.set_xticks(x)
-        ax.set_xticklabels(labels, font={"family": "Times New Roman", "size": 80})
-        ax.yaxis.set_tick_params(pad=15)
-        # 设置xlim
-        ax.set_xlim(-1, r_threshold-0.2)
-        # 设置x轴不出现x轴坐标
-        ax.get_xaxis().set_visible(False)
+        pass
     elif k == 6:
         sns.boxplot(x="Ratio", y=name[k], ax=ax, positions=[i - di for i in range(0, r_threshold)],
                     whis=0.6, data=df, showfliers=False, color=left_box_color, width=0.2,
                     linecolor=left_box_color, linewidth=5, medianprops={"color": "black", "linewidth": 2})
-        ax.set_yticks([0, 4, 8, 12])
-        ax.set_ylim(-1, 13)
-        ax.text(0.01, 0.89, "(e)", transform=ax.transAxes, fontsize=75)
+        ax.set_yticks([0, 8, 16])
+        ax.set_ylim(-1, 22)
+        ax.text(0.01, 0.89, "(d)", transform=ax.transAxes, fontsize=75)
         ax.tick_params(axis="x", direction='out', which="major", length=10, width=2, pad=15,
                        top=False, right=False)
         ax.tick_params(axis="y", direction='out', which="major", length=15, width=2, pad=15,
@@ -317,12 +286,13 @@ for i in all_list[1:]:
         ax.set_ylabel(name[k], fontsize=70)
     elif k == 7:
         ax1 = ax.twinx()
-        sns.boxplot(x="Ratio", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
+        seanborn =  sns.boxplot(x="Ratio", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
                     whis=0.6, data=df, showfliers=False, color=right_box_color, width=0.2,
                     linecolor=right_box_color, linewidth=5,
                     medianprops={"color": "black", "linewidth": 2})
-        ax1.set_yticks([0, 2, 4, 6])
-        ax1.set_ylim(-0.5, 7)
+        seanborn.set_ylabel(f"name[k]", labelpad=25) 
+        ax1.set_yticks([0, 4, 8, 12])
+        ax1.set_ylim(-0.4, 13.5)
         ax1.set_ylabel(name[k], fontsize=70, color="red")
         ax1.tick_params(axis="y", colors="red")
         ax1.set_xticklabels(labels, font={"family": "Times New Roman", "size": 80})
@@ -348,12 +318,12 @@ for i in all_list[1:]:
         ax2.plot(x_chucun, y_chucun, linestyle='-', linewidth=line_width, color="black", label="average_line", marker=".",
                  markersize="10")
         ax2.get_yaxis().set_visible(False)
-        ax2.set_yticks([0, 4, 8, 12])
-        ax2.set_ylim(-1, 13)
+        ax2.set_yticks([0, 8, 16])
+        ax2.set_ylim(-1, 22)
         # 我们再重新覆盖一层点给第二层画的箱型图为了好看
         ax3 = ax.twinx()
-        ax3.set_yticks([0, 2, 4, 6])
-        ax3.set_ylim(-0.5, 7)
+        ax3.set_yticks([0, 4, 8, 12])
+        ax3.set_ylim(-0.4, 13.5)
         ax3.get_yaxis().set_visible(False)
         ax3.scatter(x, y, color="red")
         # 以下代码是设置x轴不显示的
@@ -424,7 +394,7 @@ for i in all_list[1:]:
     # elif k == 6:
     #     ax.text(0.01, 0.86, "(e)", transform=ax.transAxes, fontsize=70)
     k += 1
-plt.savefig(f"/root/git/Project_develop/figures/Appendix_maxht_volume_fls_boxplot_newest_not_include_MCS.jpeg",
+plt.savefig(f"/root/git/Project_develop/figures/fig3_maxht_volume_fls_boxplot_newest_include_all_no_Volume.jpeg",
             bbox_inches="tight", dpi=50)
 
 

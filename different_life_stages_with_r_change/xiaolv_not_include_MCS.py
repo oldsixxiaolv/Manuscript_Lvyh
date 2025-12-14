@@ -10,6 +10,7 @@ from boxplot_x_labels import boxplot_x_labels
 from matplotlib.gridspec import GridSpec
 from matplotlib.pyplot import MultipleLocator
 from matplotlib.ticker import ScalarFormatter
+from scipy.signal import savgol_filter
 
 
 def round2(x):
@@ -66,10 +67,10 @@ k = 0
 kk = 0
 # 这里提醒一下：只有这里的$\mathregular{^{-1}}$才可以让我们设置的字体格式可以全部识别
 name = [
-        r'Maxht20 (km)', r'R$_{eq}$20 (km)',
-        r'Maxht40 (km)', r'R$_{eq}$40 (km)',
+        r'Maxht20 (km)', r'D20$_{eq}$ (km)',
+        r'Maxht40 (km)', r'D40$_{eq}$ (km)',
         r'FlRate (fl' + r'$\cdot$' + r'min$\mathregular{^{-1}}$)',
-        r'Fl40 (fl' + r'$\cdot$' + r'(100' +
+        r'FD$_{40}$ (fl' + r'$\cdot$' + r'(100' +
                 r'km)$\mathregular{^{-2}}$' + r'$\cdot$' + r'min$\mathregular{^{-1}}$)'
         ]
 plt.rcParams["font.family"] = "Times New Roman"
@@ -101,6 +102,10 @@ for i in range(0, 6):
     print(average_y_Pre_MT)
     boxplot_allshuju_two(r_MT, average_y_MT, data2[i+1])
     boxplot_allshuju_two(r_Post_MT, average_y_Post_MT, data3[i+1])
+    # 使用了低通滤波器（Savitzky-Golay滤波器）进行平滑处理
+    average_y_Pre_MT = savgol_filter(average_y_Pre_MT, window_length=20, polyorder=2)
+    average_y_MT = savgol_filter(average_y_MT, window_length=20, polyorder=2)
+    average_y_Post_MT = savgol_filter(average_y_Post_MT, window_length=20, polyorder=2)
     # zuizhongy是将average_y的二维数据变成一维的
     r_threshold = 40
     line_width = 8
@@ -223,7 +228,7 @@ for i in range(0, 6):
     # elif k == 6:
     #     ax.text(0.01, 0.86, "(e)", transform=ax.transAxes, fontsize=70)
     k += 1
-plt.savefig(f"/root/git/Project_develop/figures/fig5_maxht_volume_fls_boxplot_newest_not_include_MCS.jpeg",
+plt.savefig(f"/root/git/Project_develop/figures/Ceshi_maxht_volume_fls_boxplot_newest_not_include_MCS.jpeg",
             bbox_inches="tight", dpi=50)
 
 

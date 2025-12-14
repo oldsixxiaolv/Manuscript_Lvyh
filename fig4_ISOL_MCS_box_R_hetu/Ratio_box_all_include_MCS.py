@@ -341,7 +341,7 @@ for j in range(8, 9):
                            whiskerprops={"linestyle": "--", "linewidth": 2, "c": "black"}, patch_artist=True, vert=False)
     mean_values = [d.mean() for d in [MCS, ALL_STAGE]]
     colors = ["#FF851B", "#003366"]
-    markers = ['o', '^']
+    markers = ['^', '^']
     for i, (m, marker, col) in enumerate(zip(mean_values, markers, colors)):
         # x 轴位置是 i+1（boxplot 从 1 开始）
         ax.scatter(m, i+1, color=col, marker=marker, s=300, zorder=5)
