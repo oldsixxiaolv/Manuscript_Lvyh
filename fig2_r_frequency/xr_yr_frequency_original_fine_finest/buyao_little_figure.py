@@ -123,7 +123,7 @@ ax2.set_ylabel("percent (%)", font={"family": "Times New Roman", "size": 70}, la
 ax2.set_yticklabels(np.array(list(map(round2, list(np.arange(0, 110, 20))))),
                     font={"family": "Times New Roman", "size": 80})
 ax2.set_xticks(labels)
-ax2.set_xlabel("Ratio", font={"family": "Times New Roman", "size": 80})
+ax2.set_xlabel("R$_{conv}$", font={"family": "Times New Roman", "size": 80})
 ax2.set_xticklabels(label, font={"family": "Times New Roman", "size": 80})
 # ax2.axis(labels.extend(list(map(round2, list(np.arange(0, 1.1, 0.2))))), fontsize=16)
 # ax2.vlines(begin1, 0, jiu1, linestyles="dashed", color="red", label=f"r={round(1-begin1, 2)} ,  95%", linewidth=4)
@@ -131,7 +131,7 @@ ax2.set_xticklabels(label, font={"family": "Times New Roman", "size": 80})
 # ax2.vlines(1-begin2, 0, jiu2, linestyles="dashed", color="black",
 #            label=f"Ratio = {round(begin2, 2)} ,  {round(jiu2 * 100)}%", linewidth=10)
 ax2.hlines(jiu2, 1-begin2, 1, linestyles="dashed", color="black",
-           label=f"Ratio = {round(begin2, 2)} ,  {round(jiu2*100)}%", linewidth=10)
+           label="R$_{conv}$" + f" = {round(begin2, 2)} ,  {round(jiu2*100)}%", linewidth=10)
 # ax2.vlines(begin3, 0, jiu3, linestyles="dashed", color="black",
 #            label=f"Ratio = {round(1-begin3, 2)} ,  {round(jiu3 * 100)}%", linewidth=4)
 # ax2.hlines(jiu3, begin3, 1, linestyles="dashed", color="black", linewidth=4)

@@ -467,9 +467,9 @@ for j in range(7, 8):
         elif j == 7:
             ax.set_ylabel(f"{name[j + 1]} (km)", fontsize=40)
         elif j == 8:
-            ax.set_ylabel(f"{name[j + 1]}" + "(km$\mathregular{^{3}}$)", fontsize=40)
+            ax.set_ylabel(f"{name[j + 1]}" + " (km$\mathregular{^{3}}$)", fontsize=40)
         elif j == 9:
-            ax.set_ylabel(f"{name[j + 1]}" + "(km$\mathregular{^{3}}$)", fontsize=40)
+            ax.set_ylabel(f"{name[j + 1]}" + " (km$\mathregular{^{3}}$)", fontsize=40)
         # plt.legend() # 指定legend的位置,读者可以自己help它的用法
         ax.set_title(f"{stage[mid-1]}", fontsize=40)
         # Maturity stage

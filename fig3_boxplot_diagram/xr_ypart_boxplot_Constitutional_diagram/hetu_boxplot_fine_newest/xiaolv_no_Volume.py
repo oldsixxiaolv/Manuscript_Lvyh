@@ -105,21 +105,21 @@ for i in all_list[1:]:
     # 同理翻转zuizhongy与翻转的rx进行对应
     zuizhongy.reverse()
     # 创建一个DataFrame对象开始绘图
-    df = pd.DataFrame({name[k]: zuizhongy, 'Ratio': rx})
+    df = pd.DataFrame({name[k]: zuizhongy, 'R$_{conv}$': rx})
     # 求平均值
-    all = df.groupby('Ratio', as_index=False).mean()
+    all = df.groupby('R$_{conv}$', as_index=False).mean()
     di = 0.195
     r_threshold = 101
     left_box_color = '#A6A5A5'
     right_box_color = '#FE4F4F'
     line_width = 8
     y = all[name[k]]
-    x = all["Ratio"]
+    x = all["R$_{conv}$"]
     print(x)
     print(type(x))
     # 利用以下的代码可以对plt的图中进行x轴或者y轴标签或者刻度进行字体等的设置
     if k == 0:
-        sns.boxplot(x="Ratio", y=name[k], ax=ax, positions=[i - di for i in range(0, r_threshold)],
+        sns.boxplot(x="R$_{conv}$", y=name[k], ax=ax, positions=[i - di for i in range(0, r_threshold)],
                     whis=0.6, data=df, showfliers=False, color=left_box_color,
                     width=0.2, linecolor=left_box_color, linewidth=5,
                     medianprops={"color": "black", "linewidth": 2})
@@ -146,7 +146,7 @@ for i in all_list[1:]:
         ax.set_ylabel(name[k], fontsize=70)
     elif k == 1:
         ax1 = ax.twinx()
-        seanborn =  sns.boxplot(x="Ratio", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
+        seanborn =  sns.boxplot(x="R$_{conv}$", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
                     whis=0.6, data=df, showfliers=False, color=right_box_color,
                     width=0.2, linecolor=right_box_color, linewidth=5,
                     medianprops={"color": "black", "linewidth": 2})
@@ -188,7 +188,7 @@ for i in all_list[1:]:
         ax3.scatter(x, y, color="red")
         ax.get_xaxis().set_visible(False)
     elif k == 2:
-        sns.boxplot(x="Ratio", y=name[k], ax=ax, positions=[i - di for i in range(0, r_threshold)],
+        sns.boxplot(x="R$_{conv}$", y=name[k], ax=ax, positions=[i - di for i in range(0, r_threshold)],
                     whis=0.6, data=df, showfliers=False, color=left_box_color,
                     width=0.2, linecolor=left_box_color, linewidth=5,
                     medianprops={"color": "black", "linewidth": 2})
@@ -215,7 +215,7 @@ for i in all_list[1:]:
         ax.set_ylabel(name[k], fontsize=70)
     elif k == 3:
         ax1 = ax.twinx()
-        seanborn =   sns.boxplot(x="Ratio", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
+        seanborn =   sns.boxplot(x="R$_{conv}$", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
                     whis=0.6, data=df, showfliers=False, color=right_box_color,
                     width=0.2, linecolor=right_box_color, linewidth=5,
                     medianprops={"color": "black", "linewidth": 2})
@@ -259,7 +259,7 @@ for i in all_list[1:]:
     elif k == 4 or k == 5:
         pass
     elif k == 6:
-        sns.boxplot(x="Ratio", y=name[k], ax=ax, positions=[i - di for i in range(0, r_threshold)],
+        sns.boxplot(x="R$_{conv}$", y=name[k], ax=ax, positions=[i - di for i in range(0, r_threshold)],
                     whis=0.6, data=df, showfliers=False, color=left_box_color, width=0.2,
                     linecolor=left_box_color, linewidth=5, medianprops={"color": "black", "linewidth": 2})
         ax.set_yticks([0, 8, 16])
@@ -286,7 +286,7 @@ for i in all_list[1:]:
         ax.set_ylabel(name[k], fontsize=70)
     elif k == 7:
         ax1 = ax.twinx()
-        seanborn =  sns.boxplot(x="Ratio", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
+        seanborn =  sns.boxplot(x="R$_{conv}$", y=name[k], ax=ax1, positions=[j + di for j in range(0, r_threshold)],
                     whis=0.6, data=df, showfliers=False, color=right_box_color, width=0.2,
                     linecolor=right_box_color, linewidth=5,
                     medianprops={"color": "black", "linewidth": 2})

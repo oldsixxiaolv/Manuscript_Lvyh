@@ -5,6 +5,8 @@ from x_labels import x_labels, x_labels_for_anix
 import numpy as np
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from matplotlib.patches import ConnectionPatch
+from scipy.signal import savgol_filter
+
 
 def round2(x):
     """由于之后要用到map函数，在此创建一个函数"""
@@ -80,6 +82,8 @@ frequency_CS = []
 frequency_ES = []
 allshuju_two(data4, frequency_ES)
 allshuju_two(data, frequency_CS)
+frequency_ES = savgol_filter(frequency_ES, window_length=5, polyorder=2)
+frequency_CS = savgol_filter(frequency_CS, window_length=5, polyorder=2)
 # label是从1到0的对应的xlabel
 label = x_labels()
 label = list(map(str, label))
@@ -102,6 +106,7 @@ fig, ax2 = plt.subplots(1, 1, figsize=(40, 16.75))
 # 如果我们画的图的x轴就是字符串的，那么set_xticklabels就可以直接用
 """先绘制第一层图形"""
 # 这里的plot加上一个"r"的意思是指明线是红色的
+# 003366,  FF851B, #99A7D4, #FFD7A6
 ax2.plot(labels, frequency_CS, color="#003366", linewidth=8, label="Compact Storms (CS)")
 ax2.fill_between(labels, frequency_CS, color="#99A7D4", alpha=0.6)
 ax2.plot(labels, frequency_ES, color="#FF851B", linewidth=8, label="Extensive Storms (ES)")
@@ -111,7 +116,7 @@ ax2.set_ylabel("Frequence (#)", font={"family": "Times New Roman", "size": 75}, 
 ax2.set_yticklabels(np.array(list(map(round2, list(np.arange(0, 5500, 1000))))),
                     font={"family": "Times New Roman", "size": 55})
 ax2.set_xticks(labels)
-ax2.set_xlabel("Ratio", font={"family": "Times New Roman", "size": 75})
+ax2.set_xlabel("R$_{conv}$", font={"family": "Times New Roman", "size": 75})
 ax2.set_xticklabels(label, font={"family": "Times New Roman", "size": 55})
 # ax2.axis(labels.extend(list(map(round2, list(np.arange(0, 1.1, 0.2))))), fontsize=16)
 # ax2.vlines(begin1, 0, jiu1, linestyles="dashed", color="red", label=f"r={round(1-begin1, 2)} ,  95%", linewidth=4)

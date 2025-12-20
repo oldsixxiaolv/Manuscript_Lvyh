@@ -326,7 +326,7 @@ for j in range(8, 9):
     ax.set_yticklabels(stage, fontsize=55)
     ax.set_xticks([w for w in range(0, 101)])
     ax.set_xlim(-1, 101-0.2)
-    ax.set_xlabel("Ratio", fontsize=75)
+    ax.set_xlabel("R$_{conv}$", fontsize=75)
     xticks = ax.xaxis.get_major_ticks()
     for i in range(0, 101, 5):
         xticks[i].tick1line.set_markersize(15)
@@ -340,7 +340,8 @@ for j in range(8, 9):
             showmeans=False, showfliers=False, whis=(5, 95), medianprops={"c": "black"}, meanprops={"markersize": 30},
                            whiskerprops={"linestyle": "--", "linewidth": 2, "c": "black"}, patch_artist=True, vert=False)
     mean_values = [d.mean() for d in [MCS, ALL_STAGE]]
-    colors = ["#FF851B", "#003366"]
+    # colors = ["#FF851B", "#003366"]
+    # colors = ["#FFD7A6", "#99A7D4"]
     markers = ['^', '^']
     for i, (m, marker, col) in enumerate(zip(mean_values, markers, colors)):
         # x 轴位置是 i+1（boxplot 从 1 开始）

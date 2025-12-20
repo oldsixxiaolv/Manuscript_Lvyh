@@ -44,7 +44,7 @@ def look_for_min(label, k, parameter, coresamples):
 # ------------------------------------------------------------------
 # 1. 自动计算最优 eps 的函数
 # ------------------------------------------------------------------
-def find_best_eps(X, min_pts, plot=False):
+def find_best_eps(X, min_pts, plot=True):
     """
     给定数据 X 和固定的 min_pts，自动返回最合理的 eps。
     可选画出 k-距离曲线与拐点。
@@ -75,15 +75,26 @@ def find_best_eps(X, min_pts, plot=False):
     best_eps = k_dist[curv_sort[-935]]
     if plot:
         plt.figure(figsize=(6, 4))
-        plt.plot(x, k_dist, label='k-distance')
-        plt.axhline(best_eps, color='r', ls='--', label=f'suggested eps = {best_eps:.2f}')
-        plt.axvline(knee_idx, color='r', ls='--', alpha=0.5)
-        plt.xlabel('Data points sorted by distance')
-        plt.ylabel(f'{min_pts}-distance')
-        plt.title('k-distance graph (elbow)')
-        plt.legend()
-        plt.show()
-
+        plt.plot(x, k_dist, label='K-distance', linewidth=3.5)
+        plt.axhline(best_eps, color='r', ls='--', label=f'Best Eps = {best_eps:.2f}', linewidth=3)
+        plt.axvline(knee_idx, color='r', ls='--', alpha=0.5, linewidth=3)
+        plt.xlabel('Data points sorted by distance', fontsize=28)
+        plt.ylabel(f'{min_pts}-distance', fontsize=30)
+        plt.title('K-distance graph (elbow)', fontsize=30, pad=20)
+        plt.legend(fontsize=22)
+        plt.xticks([0, 25000, 50000, 75000], fontsize=30)
+        plt.yticks([0, 1, 2, 3, 4], fontsize=30)
+        plt.xlim(-5000, 80000)
+        plt.tick_params(axis='x', length=10, width=2)
+        plt.tick_params(axis='y', length=10, width=2)
+        plt.ylim(-0.2, 5)
+        bwith = 3.5
+        TK = plt.gca()#获取边框
+        TK.spines['bottom'].set_linewidth(bwith)#图框下边
+        TK.spines['left'].set_linewidth(bwith)#图框左边
+        TK.spines['top'].set_linewidth(bwith)#图框上边
+        TK.spines['right'].set_linewidth(bwith)#图框右边
+        plt.savefig("/root/git/Project_develop/figures/K_distance.jpeg", bbox_inches="tight", dpi=400)
     return round(best_eps, 2)
 
 def feature_normalize(dt):
@@ -168,7 +179,7 @@ def find_clusters(core_samples, label, k):
     return return_data
 
 
-plt.rcParams["font.family"] = "Times New Roman"
+plt.rcParams["font.family"] = "Arial"
 plt.rcParams["font.size"] = 12
 data_last = read_shuju()
 # stage = duqu_excel_julei(r"C:\Users\lvyih\Desktop\stage.xlsx")
@@ -266,7 +277,7 @@ inertias = []
 DBI = []
 Silhouette_Coefficient = [np.nan]
 CH = [np.nan]
-K = range(1, 8)
+K = range(4, 5)
 for k in K:
     dbscan = DBSCAN(eps=best_eps, min_samples=7)
     labels = dbscan.fit_predict(X)

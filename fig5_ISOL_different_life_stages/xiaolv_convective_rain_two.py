@@ -5,6 +5,8 @@ from x_labels import x_labels, x_labels_for_anix
 import numpy as np
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from matplotlib.patches import ConnectionPatch
+from scipy.signal import savgol_filter
+
 
 def round2(x):
     """由于之后要用到map函数，在此创建一个函数"""
@@ -82,6 +84,9 @@ frequency_Post = []
 allshuju_two(data1, frequency_Pre)
 allshuju_two(data2, frequency_Mature)
 allshuju_two(data3, frequency_Post)
+frequency_Pre = savgol_filter(frequency_Pre, window_length=8, polyorder=2)
+frequency_Mature = savgol_filter(frequency_Mature, window_length=8, polyorder=2)
+frequency_Post = savgol_filter(frequency_Post, window_length=8, polyorder=2)
 # label是从1到0的对应的xlabel
 label = x_labels()
 label = list(map(str, label))
@@ -104,18 +109,18 @@ fig, ax2 = plt.subplots(1, 1, figsize=(40, 16.75))
 # 如果我们画的图的x轴就是字符串的，那么set_xticklabels就可以直接用
 """先绘制第一层图形"""
 # 这里的plot加上一个"r"的意思是指明线是红色的
-ax2.plot(labels, frequency_Pre, color="g", linewidth=8, label="Pre-Mature Storms (Pre-MT)")
+ax2.plot(labels, frequency_Pre, color="g", linewidth=8, label="Pre-Mature (Pre-MT)")
 ax2.fill_between(labels, frequency_Pre, color="#AEE6C9", alpha=0.6)
-ax2.plot(labels, frequency_Mature, color="r", linewidth=8, label="Mature Storms (MT)")
+ax2.plot(labels, frequency_Mature, color="r", linewidth=8, label="Mature (MT)")
 ax2.fill_between(labels, frequency_Mature, color="#F58E99", alpha=0.6)
-ax2.plot(labels, frequency_Post, color="b", linewidth=8, label="Post-Mature Storms (Post-MT)")
+ax2.plot(labels, frequency_Post, color="b", linewidth=8, label="Post-Mature (Post-MT)")
 ax2.fill_between(labels, frequency_Post, color="#61DAEE", alpha=0.6)
 ax2.set_yticks(np.array(list(map(round2, list(np.arange(0, 2500, 1000))))))
 ax2.set_ylabel("Frequence (#)", font={"family": "Times New Roman", "size": 75}, labelpad=20)
 ax2.set_yticklabels(np.array(list(map(round2, list(np.arange(0, 2500, 1000))))),
                     font={"family": "Times New Roman", "size": 55})
 ax2.set_xticks(labels)
-ax2.set_xlabel("Ratio", font={"family": "Times New Roman", "size": 75})
+ax2.set_xlabel("R$_{conv}$", font={"family": "Times New Roman", "size": 75})
 ax2.set_xticklabels(label, font={"family": "Times New Roman", "size": 55})
 # ax2.axis(labels.extend(list(map(round2, list(np.arange(0, 1.1, 0.2))))), fontsize=16)
 # ax2.vlines(begin1, 0, jiu1, linestyles="dashed", color="red", label=f"r={round(1-begin1, 2)} ,  95%", linewidth=4)
@@ -145,7 +150,7 @@ xticks = ax2.xaxis.get_major_ticks()
 for i in range(0, 101, 5):
     xticks[i].tick1line.set_markersize(15)
 ax2.tick_params(axis="x", which="minor", length=8, width=2)
-ax2.legend(loc=(0.53, 0.65), prop={"family": "Times New Roman", "size": 63})
+ax2.legend(loc=(0.63, 0.65), prop={"family": "Times New Roman", "size": 63})
 # ax2.yaxis.tick_right()
 plt.savefig(r"/root/git/Project_develop/figures/fig5_xr_frequency_Pre_Mature_Post.jpeg", bbox_inches='tight', dpi=400)
 

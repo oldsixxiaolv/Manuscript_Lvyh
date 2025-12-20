@@ -326,7 +326,7 @@ for j in range(8, 9):
     ax.set_yticklabels(stage, fontsize=55)
     ax.set_xticks([w for w in range(0, 101)])
     ax.set_xlim(-1, 101-0.2)
-    ax.set_xlabel("Ratio", fontsize=75)
+    ax.set_xlabel("R$_{conv}$", fontsize=75)
     xticks = ax.xaxis.get_major_ticks()
     for i in range(0, 101, 5):
         xticks[i].tick1line.set_markersize(15)
