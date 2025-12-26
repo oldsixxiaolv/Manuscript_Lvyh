@@ -5,7 +5,6 @@ from scipy.spatial.distance import cdist
 import numpy as np
 import matplotlib.pyplot as plt
 from read_shuju import read_shuju
-from read_shuju_xiaoyu_067 import read_shuju_xiaoyu
 
 
 def feature_normalize(dt):

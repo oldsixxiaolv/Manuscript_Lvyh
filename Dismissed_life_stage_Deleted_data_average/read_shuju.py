@@ -31,7 +31,7 @@ def read_shuju():
     # 把没有闪电数据的但是有maxht40的和没有maxht40但有闪电数据的去除
     # index6 = list(np.where(flashcount != 0))
     index6 = list(np.where(npixels_40 == 0))
-    index7 = list(np.where(maxht40 == 0))
+    index7 = list(np.where(maxht40 != 0))
     index8 = list(np.where(flashcount != 0))
     # index8 = list(np.where(npixels_20 > 0))
     # index9 = list(np.where(r > 0))

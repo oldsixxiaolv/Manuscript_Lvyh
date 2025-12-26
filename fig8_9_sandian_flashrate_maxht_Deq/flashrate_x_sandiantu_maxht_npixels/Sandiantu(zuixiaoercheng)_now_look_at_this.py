@@ -58,6 +58,7 @@ def npixels_size(npixels, boost):
 """读取数据"""
 def read_shuju():
     data = SD('/root/git/Project_develop/TRMM_tropical_convection_dataset.hdf', SDC.READ)
+    data_add = SD('/root/git/Project_develop/TRMM_tropical_convection_dataset_202512.hdf', SDC.READ)
     longitude = data.select("longitude")[:]
     latitude = data.select("latitude")[:]
     landocean = list(data.select("landocean")[:])
@@ -162,6 +163,16 @@ def read_shuju():
             mid = sum(i * 4.3 * 4.3 * 1.25)
         n40_mid.append(mid)
     n40_volume = np.array(n40_mid)
+    n30 = data_add.select("n30dbz")[:]
+    n30 = n30[index]
+    n30_mid = []
+    for i, j in zip(n30, boost):
+        if j == 1:
+            mid = sum(i * 5 * 5 * 1.25)
+        else:
+            mid = sum(i * 4.3 * 4.3 * 1.25)
+        n30_mid.append(mid)
+    n30_volume = np.array(n30_mid)
     n20 = data.select("n20dbz")[:]
     n20 = n20[index]
     n20_mid = []
@@ -230,13 +241,16 @@ def read_shuju():
     npx40_divide_npx20 = np.divide(npixels_40_R, npixels_20_R)
     npx40_divide_npx30 = np.divide(npixels_40_R, npixels_30_R)
     Volume20 = n20_volume[index_add]
+    Volume30 = n30_volume[index_add]
     Volume40 = n40_volume[index_add]
     n20 = n20[index_add]
+    n30 = n30[index_add]
     n40 = n40[index_add]
     n20_volume = n20_volume[index_add]
     n40_volume = n40_volume[index_add]
+    n30_volume = n30_volume[index_add]
     mdbz = mdbz[index_add]
-    return flashrate, maxht20, maxht30, maxht40, maxdbz, minir, npixels_20_R, npixels_30_R, npixels_40_R, n20_volume, n40_volume
+    return flashrate, maxht20, maxht30, maxht40, maxdbz, minir, npixels_20_R, npixels_30_R, npixels_40_R, n20_volume, n40_volume, n30_volume
 
 
 def for_(data, core_samples, labels, num=None, delete=None):
@@ -338,7 +352,7 @@ def for_j_and_mid(name_data, color_bar, ax, s):
 """程序开始"""
 # 程序发起点
 name = ["Flash", "Maxht20", "Maxht30", "Maxht40", "Maxdbz",
-        "Minir", "D20$_{eq}$", "D30$_{eq}$", "D40$_{eq}$", "Volume20", "Volume40"]
+        "Minir", "D20$_{eq}$", "D30$_{eq}$", "D40$_{eq}$", "Volume20", "Volume40", "Volume30"]
 data = read_shuju()
 for i in data:
     print(len(i))
@@ -383,7 +397,7 @@ name_data = [data, data1, data2, data3]
 stage = ["All Stage", "Pre-Mature Stage", "Mature Stage", "Post-Mature Stage"]
 coefficient = 0
 abcd = ["(a)", "(b)", "(c)", "(d)"]
-for j in range(7, 8):
+for j in range(10, 11):
     mid = 1
     for i in name_data:
         fig = plt.figure(coefficient, figsize=(30, 20))
@@ -470,6 +484,8 @@ for j in range(7, 8):
             ax.set_ylabel(f"{name[j + 1]}" + " (km$\mathregular{^{3}}$)", fontsize=40)
         elif j == 9:
             ax.set_ylabel(f"{name[j + 1]}" + " (km$\mathregular{^{3}}$)", fontsize=40)
+        elif j == 10:
+            ax.set_ylabel(f"{name[j + 1]}" + " (km$\mathregular{^{3}}$)", fontsize=40)
         # plt.legend() # 指定legend的位置,读者可以自己help它的用法
         ax.set_title(f"{stage[mid-1]}", fontsize=40)
         # Maturity stage
@@ -508,6 +524,10 @@ for j in range(7, 8):
             ax.text(0.3, 0.15, equation_text, transform=ax.transAxes, fontsize=40)
             ax.text(0.3, 0.05, correlation_text, transform=ax.transAxes, fontsize=40)
         elif j == 9:
+            ax.text(0.8, 0.1, correlation_text, transform=ax.transAxes, fontsize=40)
+            ax.text(0.8, 0.2, f"b = {round(intercept, 2)}", transform=ax.transAxes, fontsize=40)
+            ax.text(0.8, 0.3, f"k = {round(slope, 2)}", transform=ax.transAxes, fontsize=40)
+        elif j==10:
             ax.text(0.8, 0.1, correlation_text, transform=ax.transAxes, fontsize=40)
             ax.text(0.8, 0.2, f"b = {round(intercept, 2)}", transform=ax.transAxes, fontsize=40)
             ax.text(0.8, 0.3, f"k = {round(slope, 2)}", transform=ax.transAxes, fontsize=40)
