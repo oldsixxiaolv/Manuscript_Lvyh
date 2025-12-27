@@ -228,7 +228,7 @@ for i in range(0, 6):
     # elif k == 6:
     #     ax.text(0.01, 0.86, "(e)", transform=ax.transAxes, fontsize=70)
     k += 1
-plt.savefig(f"/root/git/Project_develop/figures/Ceshi_maxht_volume_fls_boxplot_newest_not_include_MCS.jpeg",
+plt.savefig(f"../../figures/Ceshi_maxht_volume_fls_boxplot_newest_not_include_MCS.jpeg",
             bbox_inches="tight", dpi=50)
 
 

@@ -149,6 +149,6 @@ for i in range(0, 101, 5):
 ax2.tick_params(axis="x", which="minor", length=8, width=2)
 ax2.legend(loc=(0.62, 0.75), prop={"family": "Times New Roman", "size": 63})
 # ax2.yaxis.tick_right()
-plt.savefig(r"/root/git/Project_develop/figures/fig4_xr_frequency_ES_and_CS.jpeg", bbox_inches='tight', dpi=400)
+plt.savefig(r"../../figures/fig4_xr_frequency_ES_and_CS.jpeg", bbox_inches='tight', dpi=400)
 
 

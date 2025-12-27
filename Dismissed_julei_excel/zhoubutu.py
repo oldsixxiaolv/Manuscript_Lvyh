@@ -106,5 +106,5 @@ ax2.set_ylabel("CH", fontsize=14, color="red")
 ax2.tick_params(axis="y", colors="red")
 ax2.set_yticks([240000, 245000, 250000, 255000, 260000, 265000])
 ax2.set_ylim(236500, 267000)
-plt.savefig("C:\\Users\\lvyih\\Desktop\\zhoubutu_.jpeg", bbox_inches="tight", dpi=400)
+plt.savefig("../../figures/zhoubutu_.jpeg", bbox_inches="tight", dpi=400)
 

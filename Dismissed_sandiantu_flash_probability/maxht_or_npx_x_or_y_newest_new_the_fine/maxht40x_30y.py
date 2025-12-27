@@ -8,7 +8,7 @@ import matplotlib.colors as mcolors
 
 def duqu_excel():
     import pandas as pd
-    file_path = r"C:\Users\lvyih\Desktop\duqu_spss.xlsx"
+    file_path = r"../../../duqu_spss.xlsx"
     df = pd.read_excel(file_path, usecols=[1], names=None)
     dali = df.values.tolist()
     result = []
@@ -39,7 +39,7 @@ def npixels_size(npixels, boost):
 
 
 def read_shuju(former, latter):
-    data = SD('C:\\Users\\lvyih\\Desktop\\TRMM_tropical_convection_dataset.hdf', SDC.READ)
+    data = SD('../../../TRMM_tropical_convection_dataset.hdf', SDC.READ)
     longitude = list(data.select("longitude")[:])
     latitude = list(data.select("latitude")[:])
     landocean = list(data.select("landocean")[:])
@@ -198,4 +198,4 @@ ax.tick_params(direction='in', which="both", top=True, right=True)
 ax.legend(loc="upper left", prop={"family": "Times New Roman", "size": 13})
 ax.minorticks_on()
 # 这是打开次刻度的代码
-plt.savefig(r"C:\\Users\\lvyih\\Desktop\\all_stage____.jpeg", dpi=400)
+plt.savefig(r"../../../figures/all_stage____.jpeg", dpi=400)

@@ -17,7 +17,7 @@ ax.scatter3D(npixels20_R, npixels40_R, npixels40_divide_npixels20, s=0.01, color
 ax.set_xlabel('npx20R')
 ax.set_ylabel("npx40R")
 ax.set_zlabel('npx20/40')
-plt.savefig(f"C:\\Users\\lvyih\\Desktop\\kongjian_sandian.jpeg", dpi=400)
+plt.savefig(f"../../figures/kongjian_sandian.jpeg", dpi=400)
 # df = DataFrame({"r": all_list[0], "npixels_20_R": all_list[1],
 #                 "npixels_40_R": all_list[2], "npixels40_divide_npixels20": all_list[3], "flashcount": all_list[4]})
 # df.to_excel(r"C:\Users\lvyih\Desktop\x.xlsx", sheet_name="sheet1", index=False)

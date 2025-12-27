@@ -90,5 +90,5 @@ np.set_printoptions(threshold=np.inf)
 # fig.colorbar(ax1, ax=ax, orientation="horizontal", cmap=cmap, norm=norm,
 #              fraction=0.02, aspect=175, location="top", pad=2)
 plt.tight_layout()
-plt.savefig(r"C:\Users\lvyih\Desktop\Tropical_africa_all_storm_distribution.jpeg", bbox_inches="tight", dpi=100)
+plt.savefig(r"../../../../figures/Tropical_africa_all_storm_distribution.jpeg", bbox_inches="tight", dpi=100)
 # color=["grey", "cornflowerblue", "forestgreen", "yellow", "peru", "firebrick"]

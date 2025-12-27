@@ -5,7 +5,7 @@ import math
 
 
 def read_shuju():
-    data = SD('C:\\Users\\lvyih\\Desktop\\TRMM_tropical_convection_dataset.hdf', SDC.READ)
+    data = SD('../../TRMM_tropical_convection_dataset.hdf', SDC.READ)
     longitude = list(data.select("longitude")[:])
     latitude = list(data.select("latitude")[:])
     landocean = list(data.select("landocean")[:])

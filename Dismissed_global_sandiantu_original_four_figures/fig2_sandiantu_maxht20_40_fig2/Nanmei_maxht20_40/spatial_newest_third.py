@@ -100,5 +100,5 @@ ax.set_ylim(2.01, 21)
 ax.set_xlabel("Maxht40 (km)", fontsize=60)
 ax.set_ylabel("Maxht20 (km)", fontsize=60)
 ax.set_title("Americas", fontsize=70)
-plt.savefig(r"C:\Users\lvyih\Desktop\nanmeizhou_sandiantu_maxht20_40_setlim.jpeg", bbox_inches="tight", dpi=500)
+plt.savefig(r"../../../../figures/nanmeizhou_sandiantu_maxht20_40_setlim.jpeg", bbox_inches="tight", dpi=500)
 # color=["grey", "cornflowerblue", "forestgreen", "yellow", "peru", "firebrick"]

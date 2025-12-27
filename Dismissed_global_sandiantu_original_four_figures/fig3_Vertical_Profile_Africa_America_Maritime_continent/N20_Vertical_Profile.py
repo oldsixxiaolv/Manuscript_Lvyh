@@ -26,9 +26,7 @@ def npixels_size(npixels, boost):
 
 
 def read_shuju():
-    filepath = r'E:\\Programing\\school_creation_python311\\' \
-               'xiaochuang\\2024_thesis\\Excel_and_data_tropical_newest_no_executable\\' \
-               'TRMM_tropical_convection_dataset.hdf'
+    filepath = r'../../../TRMM_tropical_convection_dataset.hdf'
     data = SD(filepath, SDC.READ)
     longitude = list(data.select("longitude")[:])
     latitude = list(data.select("latitude")[:])
@@ -263,7 +261,7 @@ ax.legend(fontsize=35)
 # plt.title("Different Stages of boxplot", fontsize=40)
 # plt.yticks(fontsize=30)
 # plt.xticks(fontsize=30)
-plt.savefig(f"C:\\Users\\lvyih\\Desktop\\Africa_Americas_Maritime_continent_S20.jpeg", bbox_inches="tight", dpi=400)
+plt.savefig(f"../../../figures/Africa_Americas_Maritime_continent_S20.jpeg", bbox_inches="tight", dpi=400)
 """ax.text(
         0.2, 0.1, 'some text',
         horizontalalignment='center',  # 水平居中

@@ -7,9 +7,7 @@ import math
 def read_shuju():
     """这个函数是用来读取数据的函数"""
     """这是为了读取数据的"""
-    filepath = r'E:\\Programing\\school_creation_python311\\' \
-                'xiaochuang\\2024_thesis\\Excel_and_data_tropical_newest_no_executable\\' \
-                'TRMM_tropical_convection_dataset.hdf'
+    filepath = r'../../../../TRMM_tropical_convection_dataset.hdf'
     data = SD(filepath, SDC.READ)
     longitude = list(data.select("longitude")[:])
     latitude = list(data.select("latitude")[:])
@@ -166,7 +164,7 @@ def npixels_size(npixels, boost):
 
 def duqu_excel():
     import pandas as pd
-    file_path = r"C:\Users\lvyih\Desktop\duqu.xlsx"
+    file_path = r"../../../../?duqu.xlsx"
     df = pd.read_excel(file_path, usecols=[1], names=None)
     dali = df.values.tolist()
     result = []

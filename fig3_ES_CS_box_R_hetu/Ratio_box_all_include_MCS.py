@@ -51,7 +51,7 @@ def npixels_size(npixels, boost):
 
 
 def read_shuju():
-    data = SD('/root/git/Project_develop/TRMM_tropical_convection_dataset.hdf', SDC.READ)
+    data = SD('../../TRMM_tropical_convection_dataset.hdf', SDC.READ)
     longitude = data.select("longitude")[:]
     latitude = data.select("latitude")[:]
     landocean = list(data.select("landocean")[:])
@@ -378,7 +378,7 @@ for j in range(8, 9):
 # plt.title("Different Stages of boxplot", fontsize=40)
 # plt.yticks(fontsize=30)
 # plt.xticks(fontsize=30)
-plt.savefig(f"/root/git/Project_develop/figures/fig4_Ratio_boxplot_include_MCS.jpeg", bbox_inches="tight", dpi=400)
+plt.savefig(f"../../figures/fig4_Ratio_boxplot_include_MCS.jpeg", bbox_inches="tight", dpi=400)
 """ax.text(
         0.2, 0.1, 'some text',
         horizontalalignment='center',  # 水平居中

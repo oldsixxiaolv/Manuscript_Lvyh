@@ -395,7 +395,7 @@ ax4.scatter(RH[1], RS[1], Epsd[1], c="blue", marker="o", s=0.1)
 ax4.scatter(RH[2], RS[2], Epsd[2], c="green", marker="s", s=0.1)
 # ax4.scatter(RH[3], RS[3], Epsd[3], c="brown", marker="s", s=0.1)
 # ax4.scatter(RH[4], RS[4], Epsd[4], c="blueviolet", marker="s", s=0.1)
-# plt.savefig("/root/git/Project_develop/figures/zhoubutu.jpeg", bbox_inches="tight", dpi=400)
+# plt.savefig("../../figures/zhoubutu.jpeg", bbox_inches="tight", dpi=400)
 # np.save("./core_samples.npy", core_samples_mask)
 # np.save("./lables.npy", labels)
 

@@ -46,8 +46,8 @@ def npixels_size(npixels, boost):
 """读取数据"""
 
 def read_shuju():
-    data = SD('/root/git/Project_develop/TRMM_tropical_convection_dataset.hdf', SDC.READ)
-    data_add = SD('/root/git/Project_develop/TRMM_tropical_convection_dataset_202512.hdf', SDC.READ)
+    data = SD('../../TRMM_tropical_convection_dataset.hdf', SDC.READ)
+    data_add = SD('../../TRMM_tropical_convection_dataset_202512.hdf', SDC.READ)
     longitude = data.select("longitude")[:]
     latitude = data.select("latitude")[:]
     landocean = list(data.select("landocean")[:])
@@ -569,7 +569,7 @@ for i in All_left_right:
 # plt.title("Different Stages of boxplot", fontsize=40)
 # plt.yticks(fontsize=30)
 # plt.xticks(fontsize=30)
-plt.savefig(f"/root/git/Project_develop/figures/fig10_violin_newest.jpeg", bbox_inches="tight", dpi=400)
+plt.savefig(f"../../figures/fig10_violin_newest.jpeg", bbox_inches="tight", dpi=400)
 """ax.text(
         0.2, 0.1, 'some text',
         horizontalalignment='center',  # 水平居中

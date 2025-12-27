@@ -424,7 +424,7 @@ for i in all_list[1:]:
     # elif k == 6:
     #     ax.text(0.01, 0.86, "(e)", transform=ax.transAxes, fontsize=70)
     k += 1
-plt.savefig(f"/root/git/Project_develop/figures/Appendix_maxht_volume_fls_boxplot_newest_not_include_MCS.jpeg",
+plt.savefig(f"../../figures/Appendix_maxht_volume_fls_boxplot_newest_not_include_MCS.jpeg",
             bbox_inches="tight", dpi=50)
 
 

@@ -7,4 +7,4 @@ df = DataFrame({"r": all_list[0], "flashrate": all_list[1], "npixels_20_R": all_
                 "npixels_40_R": all_list[4], "npixels40_divide_npixels20": all_list[5],
                 "fls20": all_list[6], "fls30": all_list[7], "fls40": all_list[8], "maxht20": all_list[9],
                 "maxht30": all_list[10], "maxht40": all_list[11], "maxht": all_list[12], "maxdbz": all_list[13]})
-df.to_excel(r"C:\Users\lvyih\Desktop\x.xlsx", sheet_name="sheet1", index=False)
+df.to_excel(r"../../Excel/x.xlsx", sheet_name="sheet1", index=False)

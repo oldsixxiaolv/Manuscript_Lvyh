@@ -6,7 +6,7 @@ import math
 
 
 def read_shuju():
-    data = SD('/root/git/Project_develop/TRMM_tropical_convection_dataset.hdf', SDC.READ)
+    data = SD('../../TRMM_tropical_convection_dataset.hdf', SDC.READ)
     longitude = data.select("longitude")[:]
     latitude = data.select("latitude")[:]
     landocean = list(data.select("landocean")[:])
@@ -177,7 +177,7 @@ def read_shuju():
         flashrate, flash_40
 
 def read_shuju1():
-    data = SD('/root/git/Project_develop/TRMM_tropical_convection_dataset.hdf', SDC.READ)
+    data = SD('../../TRMM_tropical_convection_dataset.hdf', SDC.READ)
     longitude = data.select("longitude")[:]
     latitude = data.select("latitude")[:]
     landocean = list(data.select("landocean")[:])
@@ -351,7 +351,7 @@ def read_shuju1():
 
 
 def read_shuju2():
-    data = SD('/root/git/Project_develop/TRMM_tropical_convection_dataset.hdf', SDC.READ)
+    data = SD('../../TRMM_tropical_convection_dataset.hdf', SDC.READ)
     longitude = data.select("longitude")[:]
     latitude = data.select("latitude")[:]
     landocean = list(data.select("landocean")[:])
@@ -553,7 +553,7 @@ def npixels_size(npixels, boost):
 
 def duqu_excel():
     import pandas as pd
-    file_path = r"/root/git/Project_develop/manuscript_review/Excel_and_data_tropical_newest_no_executable/duqu_last.xlsx"
+    file_path = r"../../Excel_and_data_tropical_newest_no_executable/duqu_last.xlsx"
     df = pd.read_excel(file_path, usecols=[1], names=None)
     dali = df.values.tolist()
     result = []

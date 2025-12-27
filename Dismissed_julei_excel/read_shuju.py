@@ -6,9 +6,7 @@ import math
 
 
 def read_shuju():
-    filepath = r'E:\\Programing\\school_creation_python311\\' \
-               'xiaochuang\\2024_thesis\\Excel_and_data_tropical_newest_no_executable\\' \
-               'TRMM_tropical_convection_dataset.hdf'
+    filepath = r'../../TRMM_tropical_convection_dataset.hdf'
     data = SD(filepath, SDC.READ)
     longitude = list(data.select("longitude")[:])
     latitude = list(data.select("latitude")[:])
