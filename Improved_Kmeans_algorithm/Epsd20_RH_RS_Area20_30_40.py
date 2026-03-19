@@ -94,7 +94,7 @@ def find_best_eps(X, min_pts, plot=True):
         TK.spines['left'].set_linewidth(bwith)#图框左边
         TK.spines['top'].set_linewidth(bwith)#图框上边
         TK.spines['right'].set_linewidth(bwith)#图框右边
-        plt.savefig("/root/git/Project_develop/figures/K_distance.jpeg", bbox_inches="tight", dpi=400)
+        # plt.savefig("/root/git/Project_develop/figures/K_distance.jpeg", bbox_inches="tight", dpi=400)
     return round(best_eps, 2)
 
 def feature_normalize(dt):
@@ -277,7 +277,7 @@ inertias = []
 DBI = []
 Silhouette_Coefficient = [np.nan]
 CH = [np.nan]
-K = range(4, 5)
+K = range(6, 7)
 for k in K:
     dbscan = DBSCAN(eps=best_eps, min_samples=7)
     labels = dbscan.fit_predict(X)
