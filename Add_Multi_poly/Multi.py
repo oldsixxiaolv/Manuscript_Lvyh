@@ -176,7 +176,7 @@ def read_shuju():
     npx40_divide_npx30 = np.divide(npixels_40_R, npixels_30_R)
     Volume20 = n20_volume[index_add]
     Volume40 = n40_volume[index_add]
-    return np.log(flashrate), maxht40, maxht30, n40_volume/1000, minir/100, maxdbz/100
+    return np.log(flashrate), maxht40, maxht30, Volume40/1000, minir/100, maxdbz/100
 # n20dbz, n30dbz, n40dbz, maxdbz
 
 
@@ -228,7 +228,7 @@ def duoyuanxianxing(data, name):
     data = pd.DataFrame(data).T
     data.columns = name
     x = sm.add_constant(data.iloc[:, 1:])
-    y = data["Flashrate"]
+    y = data["FlRate"]
     model = sm.OLS(y, x)
     result = model.fit()
     print(result.summary())
@@ -237,25 +237,27 @@ def duoyuanxianxing(data, name):
 def for_(data, core_samples, labels, num=None, delete=None):
     mid = []
     if num==None:
-        i_mid = data[core_samples]
-        mid = i_mid[np.where(labels != delete)]
+        for i in data:
+            i_mid = i[core_samples]
+            mid.append(i_mid[np.where(labels != delete)])
     else:
-        i_mid = data[core_samples]
-        mid = i_mid[np.where(labels == num)]
+        for i in data:
+            i_mid = i[core_samples]
+            mid.append(i_mid[np.where(labels == num)])
     return mid
+
 
 """程序开始"""
 
 data = read_shuju()
-# print(data)
 core_samples = np.load("./core_samples.npy")
 labels = np.load("./lables.npy")
-print(data[core_samples])
 data1 = for_(data, core_samples, labels, 3)
 data2 = for_(data, core_samples, labels, 2)
 data3 = for_(data, core_samples, labels, 1)
-
-
+print(len(data1[0]))
+print(len(data2[0]))
+print(len(data3[0]))
 # 程序发起点
 name = ["FlRate", "Maxht40", "Maxht30", "Volume40", "Minir", "Maxdbz"]
 duoyuanxianxing(data1, name)

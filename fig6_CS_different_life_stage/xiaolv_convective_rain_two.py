@@ -68,7 +68,7 @@ def duqu_excel_julei(path):
 
 """读取数据部分"""
 r = read_shuju()
-print(r)
+print(type(r))
 core_samples = np.load("./core_samples.npy")
 labels = np.load("./lables.npy")
 data1 = for_(r, core_samples, labels, 3)
