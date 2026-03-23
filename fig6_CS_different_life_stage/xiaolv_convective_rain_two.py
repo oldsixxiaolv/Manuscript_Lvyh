@@ -68,6 +68,7 @@ def duqu_excel_julei(path):
 
 """读取数据部分"""
 r = read_shuju()
+print(r)
 core_samples = np.load("./core_samples.npy")
 labels = np.load("./lables.npy")
 data1 = for_(r, core_samples, labels, 3)
@@ -152,6 +153,6 @@ for i in range(0, 101, 5):
 ax2.tick_params(axis="x", which="minor", length=8, width=2)
 ax2.legend(loc=(0.63, 0.65), prop={"family": "Times New Roman", "size": 63})
 # ax2.yaxis.tick_right()
-plt.savefig(r"/root/git/Project_develop/figures/fig5_xr_frequency_Pre_Mature_Post.jpeg", bbox_inches='tight', dpi=400)
+plt.savefig(r"/root/git/Project_develop/Guochuang/figures/fig5_xr_frequency_Pre_Mature_Post.jpeg", bbox_inches='tight', dpi=400)
 
 

@@ -245,6 +245,7 @@ def duoyuanxianxing(data, name):
 # 程序发起点
 name = ["Flashrate", "Maxht40", "Maxht30", "Vpx40", "Minir", "Maxdbz"]
 data = read_shuju()
+print(data)
 stage1 = duqu_excel_julei(r"../../Excel_and_data_tropical_newest_no_executable/stage1.xlsx")
 stage2 = duqu_excel_julei(r"../../Excel_and_data_tropical_newest_no_executable/stage2.xlsx")
 stage3 = duqu_excel_julei(r"../../Excel_and_data_tropical_newest_no_executable/stage3.xlsx")
