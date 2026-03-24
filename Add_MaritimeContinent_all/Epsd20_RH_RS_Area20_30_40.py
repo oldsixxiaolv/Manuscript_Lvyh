@@ -277,7 +277,7 @@ inertias = []
 DBI = []
 Silhouette_Coefficient = [np.nan]
 CH = [np.nan]
-K = range(4, 5)
+K = range(5, 6)
 for k in K:
     dbscan = DBSCAN(eps=best_eps, min_samples=7)
     labels = dbscan.fit_predict(X)
@@ -396,8 +396,8 @@ for k in K:
 # ax4.scatter(RH[3], RS[3], Epsd[3], c="brown", marker="s", s=0.1)
 # ax4.scatter(RH[4], RS[4], Epsd[4], c="blueviolet", marker="s", s=0.1)
 # plt.savefig("../../figures/zhoubutu.jpeg", bbox_inches="tight", dpi=400)
-# np.save("./core_samples.npy", core_samples_mask)
-# np.save("./lables.npy", labels)
+np.save("./core_samples.npy", core_samples_mask)
+np.save("./lables.npy", labels)
 
 
 
