@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
+from statsmodels.discrete.discrete_model import NegativeBinomial
 import matplotlib.pyplot as plt
 from pandas import DataFrame
 import math
@@ -176,7 +177,7 @@ def read_shuju():
     npx40_divide_npx30 = np.divide(npixels_40_R, npixels_30_R)
     Volume20 = n20_volume[index_add]
     Volume40 = n40_volume[index_add]
-    return np.log(flashrate), maxht40, maxht30, Volume40/1000, minir/100, maxdbz/100
+    return flashrate, flash_40, maxht30, Volume40/1000, npixels_40_R
 # n20dbz, n30dbz, n40dbz, maxdbz
 
 
@@ -227,11 +228,51 @@ def ten_nine(x):
 def duoyuanxianxing(data, name):
     data = pd.DataFrame(data).T
     data.columns = name
-    x = sm.add_constant(data.iloc[:, 1:])
-    y = data["FlRate"]
-    model = sm.OLS(y, x)
+    x = sm.add_constant(data.iloc[:, 2:])
+    y1 = data["FlRate"]
+    y2 = data["FD40"]
+    # y1
+    print("FlRate")
+    model = sm.OLS(y1, x)
     result = model.fit()
     print(result.summary())
+    # y2
+    # print("FD40")
+    # model = sm.OLS(y2, x)
+    # result = model.fit()
+    # print(result.summary())
+
+def NBR(data, name):
+    data = pd.DataFrame(data).T
+    data.columns = name
+    x = sm.add_constant(data.iloc[:, 2:])
+    y1 = data["FlRate"]
+    y2 = data["FD40"]
+    # y1
+    print("FlRate")
+    # model_alpha = NegativeBinomial(y, x).fit(disp=0, maxiter=100)
+    # lnalpha = model_alpha.params['lnalpha']  # 获取对数形式的离散参数
+    # alpha = np.exp(lnalpha)
+    # print(alpha)
+    model = sm.GLM(y1, x, family=sm.families.NegativeBinomial()).fit()
+    pearson_chi2 = model.pearson_chi2
+    df_resid = model.df_resid
+    alpha = pearson_chi2 / df_resid
+    print(alpha)
+    model_output = sm.GLM(y1, x, family=sm.families.NegativeBinomial(alpha=alpha)).fit()
+    print(model_output.summary())
+    # y2
+    # print("FD40")
+    # model = sm.GLM(y2, x, family=sm.families.NegativeBinomial()).fit()
+    # pearson_chi2 = model.pearson_chi2
+    # df_resid = model.df_resid
+    # alpha = pearson_chi2 / df_resid
+    # print(alpha)
+    # model_output = sm.GLM(y2, x, family=sm.families.NegativeBinomial(alpha=alpha)).fit()
+    # print(model_output.summary())
+
+
+
 
 
 def for_(data, core_samples, labels, num=None, delete=None):
@@ -255,15 +296,19 @@ labels = np.load("./lables.npy")
 data1 = for_(data, core_samples, labels, 3)
 data2 = for_(data, core_samples, labels, 2)
 data3 = for_(data, core_samples, labels, 1)
-print(len(data1[0]))
-print(len(data2[0]))
-print(len(data3[0]))
+print(len(data1[0]), data1[0].mean(), data1[0].var())
+print(len(data2[0]), data2[0].mean(), data2[0].var())
+print(len(data3[0]), data3[0].mean(), data3[0].var())
 # 程序发起点
-name = ["FlRate", "Maxht40", "Maxht30", "Volume40", "Minir", "Maxdbz"]
-duoyuanxianxing(data1, name)
-duoyuanxianxing(data2, name)
-duoyuanxianxing(data3, name)
-
+name = ["FlRate", "FD40", "Maxht30", "Volume40", "D40eq"]
+# duoyuanxianxing(data, name)
+# duoyuanxianxing(data1, name)
+# duoyuanxianxing(data2, name)
+# duoyuanxianxing(data3, name)
+NBR(data, name)
+NBR(data1, name)
+NBR(data2, name)
+NBR(data3, name)
 # plt.rcParams['lines.linewidth'] = 3
 # name_data = [data, data1, data2, data3]
 # stage = ["All Stage", "Pre-Mature Stage", "Maturity stage", "Post-Mature Stage"]
