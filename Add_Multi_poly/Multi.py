@@ -177,7 +177,7 @@ def read_shuju():
     npx40_divide_npx30 = np.divide(npixels_40_R, npixels_30_R)
     Volume20 = n20_volume[index_add]
     Volume40 = n40_volume[index_add]
-    return flashrate, flash_40, maxht30, Volume40/1000, npixels_40_R
+    return flashrate, flash_40, maxht30, Volume40/1000,
 # n20dbz, n30dbz, n40dbz, maxdbz
 
 
@@ -300,7 +300,7 @@ print(len(data1[0]), data1[0].mean(), data1[0].var())
 print(len(data2[0]), data2[0].mean(), data2[0].var())
 print(len(data3[0]), data3[0].mean(), data3[0].var())
 # 程序发起点
-name = ["FlRate", "FD40", "Maxht30", "Volume40", "D40eq"]
+name = ["FlRate", "FD40", "Maxht30", "Volume40"]
 # duoyuanxianxing(data, name)
 # duoyuanxianxing(data1, name)
 # duoyuanxianxing(data2, name)
