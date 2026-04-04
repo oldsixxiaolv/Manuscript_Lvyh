@@ -397,7 +397,7 @@ name_data = [data, data1, data2, data3]
 stage = ["All Stage", "Pre-Mature Stage", "Mature Stage", "Post-Mature Stage"]
 coefficient = 0
 abcd = ["(a)", "(b)", "(c)", "(d)"]
-for j in range(10, 11):
+for j in range(2, 3):
     mid = 1
     for i in name_data:
         fig = plt.figure(coefficient, figsize=(30, 20))

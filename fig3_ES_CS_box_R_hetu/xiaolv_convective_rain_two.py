@@ -107,9 +107,9 @@ fig, ax2 = plt.subplots(1, 1, figsize=(40, 16.75))
 """先绘制第一层图形"""
 # 这里的plot加上一个"r"的意思是指明线是红色的
 # 003366,  FF851B, #99A7D4, #FFD7A6
-ax2.plot(labels, frequency_CS, color="#003366", linewidth=8, label="Compact Storms (CS)")
+ax2.plot(labels, frequency_CS, color="#003366", linewidth=8, label="Compact Storms (CSs)")
 ax2.fill_between(labels, frequency_CS, color="#99A7D4", alpha=0.6)
-ax2.plot(labels, frequency_ES, color="#FF851B", linewidth=8, label="Extensive Storms (ES)")
+ax2.plot(labels, frequency_ES, color="#FF851B", linewidth=8, label="Extensive Storms (ESs)")
 ax2.fill_between(labels, frequency_ES, color="#FFD7A6", alpha=0.6)
 ax2.set_yticks(np.array(list(map(round2, list(np.arange(0, 5500, 1000))))))
 ax2.set_ylabel("Frequence (#)", font={"family": "Times New Roman", "size": 75}, labelpad=20)

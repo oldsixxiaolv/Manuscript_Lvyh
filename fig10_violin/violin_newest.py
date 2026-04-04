@@ -421,8 +421,8 @@ for i in All_left_right:
         # 40dBZ
         ax.fill_betweenx(Height_n, i[0][2], i[1][2], hatch="|", color="#B2182B", label="40 dBZ")
         ax.set_title("Pre-Mature", fontsize=50)
-        ax.set_xlabel("Horizontal scale", fontsize=50)
-        ax.set_ylabel("Altitude", fontsize=50, labelpad=1)
+        ax.set_xlabel("Horizontal scale (km)", fontsize=50)
+        ax.set_ylabel("Altitude (km)", fontsize=50, labelpad=1)
         ax.text(0.03, 0.85, "(a)", transform=ax.transAxes, fontsize=60)
         ax_violin.text(0.04, 0.83, "(b)", transform=ax_violin.transAxes, fontsize=60)
     elif index==1:
@@ -440,7 +440,7 @@ for i in All_left_right:
         # 40dBZ
         ax.fill_betweenx(Height_n, i[0][2], i[1][2], hatch="|", color="#B2182B", label="40 dBZ")
         ax.set_title("Mature", fontsize=50)
-        ax.set_xlabel("Horizontal scale", fontsize=50)
+        ax.set_xlabel("Horizontal scale (km)", fontsize=50)
         # ax.set_ylabel("Altitude", fontsize=50, labelpad=1)
         # ax.text(0.03, 0.85, "(b)", transform=ax.transAxes, fontsize=60)
         ax_violin.text(0.04, 0.83, "(c)", transform=ax_violin.transAxes, fontsize=60)
@@ -460,7 +460,7 @@ for i in All_left_right:
         ax.fill_betweenx(Height_n, i[0][2], i[1][2], hatch="|", color="#B2182B", label="40 dBZ")
         ax.legend(fontsize=35)
         ax.set_title("Post-Mature", fontsize=50)
-        ax.set_xlabel("Horizontal scale", fontsize=50)
+        ax.set_xlabel("Horizontal scale (km)", fontsize=50)
         # ax.set_ylabel("Altitude", fontsize=50, labelpad=1)
         # ax.text(0.03, 0.85, "(c)", transform=ax.transAxes, fontsize=60)
         ax_violin.text(0.04, 0.83, "(d)", transform=ax_violin.transAxes, fontsize=60)
@@ -529,8 +529,8 @@ for i in All_left_right:
     #     text.set_color(c)
     # ax_violin.set_ylabel(r'fl' + r'$\cdot$' + r'min$\mathregular{^{-1}}$', fontsize=40)
     # ax_violin2.set_ylabel(r'fl' + r'$\cdot$' + r'min$\mathregular{^{-1}}$' + r'$\cdot$' + r'(100km)$\mathregular{^{-2}}$', fontsize=40)
-    ax_violin.set_ylabel(r'FlRate', color="#203DF0", labelpad=10, fontsize=50)
-    ax_violin2.set_ylabel(r'FD$_{40}$', color="#F52D4B", labelpad=10, fontsize=50)
+    ax_violin.set_ylabel(r'FlRate (fl' + r'$\cdot$' + r'min$\mathregular{^{-1}}$)', color="#203DF0", labelpad=10, fontsize=40)
+    ax_violin2.set_ylabel(r'FD$_{40}$ (fl' + r'$\cdot$' +  r'min$\mathregular{^{-1}}$' + r'$\cdot$' + r'(100km)$\mathregular{^{-2}}$)', color="#F52D4B", labelpad=10, fontsize=40)
     # 为双y轴创建colorbar
     # cbar1 = fig.colorbar(violin, ax=ax_violin, pad=0.1) # pad 增加与图的间距
     # cbar1.set_label('FlRate', fontsize=40)
@@ -548,7 +548,7 @@ for i in All_left_right:
         else:
             xtickslabels.append("")
     ax_violin.set_xticklabels(xtickslabels)
-    ax_violin.set_xlabel("Percentage", fontsize=50)
+    ax_violin.set_xlabel("Percentage (%)", fontsize=50)
     # ax_violin.grid(True)
     # ax.set_ylabel("Altitude", fontsize=45)
     # set_axis_style(ax_violin, ["Flashrate", "FD$_{40}$"])

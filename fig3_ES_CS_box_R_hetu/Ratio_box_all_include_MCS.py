@@ -295,7 +295,7 @@ print(np.mean(data3[8]))
 # print(len(data3[0]))
 # print(len(data2[0]))
 # print(len(data2[0]))
-stage = ["ES", "CS", "Pre-MT", "MT", "Post-MT"]
+stage = ["ESs", "CSs", "Pre-MT", "MT", "Post-MT"]
 coefficient = 0
 fig = plt.figure(coefficient, figsize=(40, 7))
 plt.rcParams["font.family"] = "Times New Roman"
