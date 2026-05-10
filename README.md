@@ -1,4 +1,4 @@
-## ***New Insights from TRMM Legacy: Stage-Dependent Relationships Between Lightning and Convective Structure in Thunderstorms***
+## ***New Insights from TRMM Legacy: Stage-Dependent Relationships Between Lightning and Convective Structure in Thunderstorms Over Tropical Africa***
 
 *Creator: Lyu yihang  ;  Institude: Lanzhou University  ;  Supervisor：Wu Xueke*
 
@@ -13,12 +13,12 @@
 ### **Insturction**
 
 ​    1.The collated database can be found in the reference.
-​    2.The files with **dismissed** in their names are not for the thesis right now, and the number of the fig is not absolute correspondent to thesis.
+​    2.The files with **dismissed** in their names are not for the thesis right now, and the number of the fig is correspondent to thesis.
 ​    3.These programs need to be modified before you run it. (The path of hdf files which you can download through the database in the reference)
 
 ### **Acknowledgements**
 
-​    I am grateful to my mentor Wu Xueke. As an undergraduate student, my research skills still need improvement. He is very patient and responsible for me, I hope to work more efficiently with him in research in the future. The figures are all original. If you use these codes to plot and make some improvements to the codes, I will appretiate it if you  share them with me.
+​    I am deeply grateful to my mentor, Prof. Wu Xueke. As an undergraduate researcher, I know I still have much to learn, and his patience and guidance mean everything to me. He encouraged my early attempts, stood by me through repeated failures, and taught me how to keep moving forward. All figures in this repository are original. If you use or improve these codes, I would appreciate it if you share your modifications with me.
 
 ### **Reference**
 
