@@ -20,7 +20,7 @@
 
 ### **Acknowledgements**
 
-​    &ensp;&ensp;&ensp; 1. I am deeply grateful to my mentor, Prof. Wu Xueke. As an undergraduate researcher, I know I still have much to learn, and his patience and guidance mean everything to me. He encouraged my early attempts, stood by me through repeated failures, and taught me how to keep moving forward. All figures in this repository are original. If you use or improve these codes, I would appreciate it if you share your modifications with me. <br />
+​    &ensp;&ensp;&ensp; 1. I am deeply grateful to my mentor, Prof. Wu Xueke. I know I still have much to learn, and his patience and guidance mean everything to me. He encouraged my early attempts, stood by me through repeated failures, and taught me how to keep moving forward. All figures in this repository are original. If you use or improve these codes, I would appreciate it if you share your modifications with me. <br />
 ​    &ensp;&ensp;&ensp; 2. I appreciate Liu chuntao for collocating the database of TRMM so that we can reprocess TRMM data more conveniently. (https://atmos.tamucc.edu/trmm/data/). <br />
 
 ### **Reference**
