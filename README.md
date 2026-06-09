@@ -27,3 +27,4 @@
 
 ​    &ensp;&ensp;&ensp; **Lyu, . yihang . (2025). Thunderstorms stage identification (2.0) [Data set]. Lyu yihang. https://doi.org/10.5281/zenodo.18041880** <br />
 ​    &ensp;&ensp;&ensp; Wu, X., Lyu, Y., Hu, X., Zhang, Z., Hu, Y., Hu, G., & Lin, X. (2026). New insights from TRMM legacy: Stage-dependent relationships between lightning and convective structure in thunderstorms over tropical Africa. Journal of Geophysical Research: Atmospheres, 131, e2026JD046836. https://doi.org/10.1029/2026JD046836 <br />
+​    &ensp;&ensp;&ensp; Yihang Lyu (2026) New Insights from TRMM Legacy: Stage-Dependent Relationships Between Lightning and Convective Structure in Thunderstorms Over Tropical Africa [Source Code]. https://doi.org/10.24433/CO.6720035.v1 <br />
